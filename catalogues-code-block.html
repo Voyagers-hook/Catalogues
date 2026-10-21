@@ -1,287 +1,410 @@
 <!--
   ============================================================
-  VOYAGERS HOOK : SUPPLIER CATALOGUES PAGE
-  Squarespace: paste into ONE Code Block on the /catalogues page.
+  VOYAGERS HOOK : SUPPLIER CATALOGUES PAGE  (v2)
+  Squarespace: on the /catalogues page use one section with its
+  padding set to 0 on all sides, add ONE Code Block, paste all of this.
 
   TO ADD A CATALOGUE LATER
-  1. Upload the PDF and a cover JPG (covers/ folder) to the
+  1. Upload the PDF, plus a cover JPG into covers/, to the
      Voyagers-hook/Catalogues GitHub repository.
-  2. Copy one line in CATALOGUES below and change the details.
+  2. Copy one line in CATALOGUES (script at the bottom) and edit it.
 
-  TO ADD A BRAND WITH NO CATALOGUE
-  Copy one line in BRANDS below and change the name and link.
+  TO ADD A BRAND
+  Copy one line in BRANDS and edit it. img is optional.
 
-  Styles keys you can use: carp, coarse, predator, sea, fly
+  Style keys: carp, coarse, predator, sea, fly
+  Colours: brown #26241f | stone #f1ece3 | teal #0397b2 | orange #ff751f
+  Font: the same system font stack as the homepage hero and sale page
   ============================================================
 -->
 <div id="vhcat">
 <style>
 #vhcat {
-  --vh-ink: #1c1c1e;
-  --vh-body: #050505;
-  --vh-muted: rgba(0,0,0,0.58);
-  --vh-line: #e2e2e2;
-  --vh-soft: #f4f4f4;
-  --vh-teal: #0397b2;
-  --vh-dark: #26241f;
-  --vh-head: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
-  font-family: inherit;
-  color: var(--vh-body);
-  max-width: 1304px;
-  margin: 0 auto;
-  padding: 24px 32px 40px;
-  box-sizing: border-box;
+  --brown: #26241f;
+  --brown-2: #312e28;
+  --stone: #f1ece3;
+  --stone-line: #e4ddd0;
+  --ink: #26241f;
+  --text: #4a4843;
+  --mute: #7a766d;
+  --teal: #0397b2;
+  --teal-dark: #0383a0;
+  --orange: #ff751f;
+  --font: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  font-family: var(--font);
+  -webkit-font-smoothing: antialiased;
+  color: var(--text);
+  background: var(--stone);
+  line-height: 1.5;
 }
-#vhcat *, #vhcat *::before, #vhcat *::after { box-sizing: border-box; }
-#vhcat a { text-decoration: none; }
+#vhcat *, #vhcat *::before, #vhcat *::after { box-sizing: border-box; margin: 0; padding: 0; font-family: var(--font) !important; }
+#vhcat a { text-decoration: none !important; color: inherit; }
+#vhcat img { display: block; max-width: 100%; }
+#vhcat .wrap { max-width: 1240px; margin: 0 auto; padding-inline: clamp(16px, 4vw, 48px); }
 
-/* ── Hero ── */
-#vhcat .vhc-hero {
-  background: var(--vh-dark);
-  color: #fff;
-  border-radius: 14px;
-  padding: 56px 48px 48px;
-  position: relative;
-  overflow: hidden;
+#vhcat .kicker {
+  display: flex; align-items: center; gap: 10px;
+  font-size: 10px; font-weight: 800; letter-spacing: 0.28em; text-transform: uppercase; color: var(--teal);
 }
-#vhcat .vhc-hero::after {
-  content: '';
-  position: absolute; right: -80px; top: -80px;
-  width: 320px; height: 320px; border-radius: 50%;
-  border: 1px solid rgba(255,255,255,0.08);
+#vhcat .kicker::before { content: ''; width: 22px; height: 2px; background: var(--teal); flex-shrink: 0; }
+#vhcat .dot { color: var(--orange); }
+
+#vhcat .btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+  padding: 15px 28px; border-radius: 8px;
+  font-size: 12px; font-weight: 800; letter-spacing: 0.14em; text-transform: uppercase; line-height: 1.2;
+  transition: background .2s, transform .2s, box-shadow .2s, border-color .2s, color .2s;
 }
-#vhcat .vhc-eyebrow {
-  display: flex; align-items: center; gap: 12px;
-  font-family: var(--vh-head);
-  font-size: 11px; font-weight: 800; letter-spacing: 0.2em; text-transform: uppercase;
-  color: var(--vh-teal);
-  margin: 0 0 14px;
+#vhcat .btn-teal { background: var(--teal); color: #fff !important; }
+#vhcat .btn-teal:hover { background: var(--teal-dark); transform: translateY(-2px); box-shadow: 0 12px 30px rgba(3,151,178,0.35); }
+#vhcat .btn-out { border: 1.5px solid rgba(255,255,255,0.22); color: rgba(255,255,255,0.75) !important; }
+#vhcat .btn-out:hover { border-color: #fff; color: #fff !important; }
+#vhcat a:focus-visible, #vhcat button:focus-visible, #vhcat input:focus-visible { outline: 3px solid var(--teal); outline-offset: 3px; }
+
+/* ---------- HERO (same build as the homepage hero) ---------- */
+#vhcat .hero {
+  display: grid; grid-template-columns: 48% 52%; min-height: 64vh;
+  background: var(--brown); overflow: hidden; border-bottom: 4px solid var(--orange);
 }
-#vhcat .vhc-eyebrow::before { content: ''; width: 28px; height: 1px; background: var(--vh-teal); }
-#vhcat .vhc-hero h1 {
-  font-family: var(--vh-head);
-  font-weight: 900; text-transform: uppercase;
-  font-size: clamp(34px, 6vw, 58px); line-height: 0.95; letter-spacing: -0.04em;
-  color: #fff; margin: 0 0 18px;
+#vhcat .hero-l { display: flex; flex-direction: column; justify-content: center; padding: 70px clamp(24px, 5vw, 70px); position: relative; z-index: 2; }
+#vhcat .hero h1 {
+  margin-top: 22px; font-size: clamp(54px, 6vw, 92px); font-weight: 900; line-height: 0.9; letter-spacing: -0.04em;
+  color: #fff; text-transform: uppercase;
 }
-#vhcat .vhc-hero h1 span { color: var(--vh-teal); }
-#vhcat .vhc-hero p {
-  max-width: 560px; margin: 0; font-size: 15px; line-height: 1.6; color: rgba(255,255,255,0.78);
+#vhcat .hero h1 em { font-style: normal; color: var(--teal); }
+#vhcat .hero-sub { margin-top: 20px; font-size: 15px; line-height: 1.65; color: rgba(255,255,255,0.56); max-width: 440px; }
+#vhcat .hero-sub b { color: #fff; font-weight: 700; }
+#vhcat .hero-btns { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 30px; }
+#vhcat .stats { display: flex; margin-top: 36px; }
+#vhcat .stat { padding-right: 26px; }
+#vhcat .stat + .stat { border-left: 1px solid rgba(255,255,255,0.1); padding-left: 26px; }
+#vhcat .stat-n { font-size: 24px; font-weight: 900; color: #fff; letter-spacing: -0.02em; line-height: 1.1; }
+#vhcat .stat-n em { font-style: normal; color: var(--teal); }
+#vhcat .stat-l { margin-top: 4px; font-size: 9px; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase; color: rgba(255,255,255,0.4); }
+#vhcat .hero-r { position: relative; min-height: 100%; }
+#vhcat .hero-r::before {
+  content: ''; position: absolute; inset: 0; z-index: 2;
+  background: linear-gradient(to right, var(--brown) 0%, rgba(38,36,31,.18) 28%, transparent 55%);
+}
+#vhcat .hero-r img { width: 100%; height: 100%; object-fit: cover; object-position: center; filter: brightness(.82) saturate(1.08); }
+
+/* ---------- PROMISES (eBay template tiles) ---------- */
+#vhcat .promises { padding-top: clamp(36px, 5vw, 56px); }
+#vhcat .promise-grid { display: grid; grid-template-columns: 1.35fr 1fr 1fr; gap: 14px; }
+#vhcat .promise {
+  display: flex; gap: 16px; align-items: flex-start;
+  background: #fff; border: 1px solid var(--stone-line); border-radius: 12px; padding: 22px 22px 20px;
+}
+#vhcat .promise.main { background: var(--brown); border-color: var(--brown); color: rgba(255,255,255,0.72); }
+#vhcat .promise-ico {
+  flex-shrink: 0; width: 44px; height: 44px; border-radius: 50%; display: grid; place-items: center;
+  background: rgba(3,151,178,0.12); color: var(--teal);
+}
+#vhcat .promise.main .promise-ico { background: var(--orange); color: var(--brown); }
+#vhcat .promise-ico svg { width: 22px; height: 22px; }
+#vhcat .promise h3 {
+  font-size: 15px; font-weight: 900; letter-spacing: 0.02em; text-transform: uppercase; color: var(--ink); line-height: 1.2;
+}
+#vhcat .promise.main h3 { color: #fff; font-size: 19px; letter-spacing: -0.01em; }
+#vhcat .promise.main h3 em { font-style: normal; color: var(--orange); }
+#vhcat .promise p { margin-top: 6px; font-size: 14px; line-height: 1.55; }
+
+/* ---------- CATALOGUES ---------- */
+#vhcat .cats { padding-block: clamp(44px, 6vw, 72px) 10px; }
+#vhcat .head { display: flex; justify-content: space-between; align-items: flex-end; gap: 20px; flex-wrap: wrap; margin-bottom: 22px; }
+#vhcat h2 {
+  margin-top: 12px; font-size: clamp(34px, 4.6vw, 54px); font-weight: 900; letter-spacing: -0.04em; line-height: 0.95;
+  text-transform: uppercase; color: var(--ink);
+}
+#vhcat h2 em { font-style: normal; color: var(--teal); }
+#vhcat .head-note { font-size: 14px; color: var(--mute); max-width: 340px; line-height: 1.6; }
+
+#vhcat .tools { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 22px; }
+#vhcat .chips { display: flex; flex-wrap: wrap; gap: 8px; }
+#vhcat .chip {
+  font-size: 11px; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase; line-height: 1.2;
+  padding: 10px 15px; border-radius: 8px; cursor: pointer;
+  background: #fff; color: var(--ink); border: 1px solid var(--stone-line);
+  transition: background .15s, color .15s, border-color .15s;
+}
+#vhcat .chip:hover { border-color: var(--ink); }
+#vhcat .chip.on { background: var(--brown); color: #fff; border-color: var(--brown); }
+#vhcat .search { position: relative; flex: 0 1 260px; }
+#vhcat .search input {
+  width: 100%; font-size: 14px; color: var(--ink);
+  padding: 11px 14px 11px 38px; border-radius: 8px; border: 1px solid var(--stone-line); background: #fff; outline: none;
+}
+#vhcat .search input:focus { border-color: var(--teal); }
+#vhcat .search svg { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); width: 16px; height: 16px; fill: var(--mute); }
+
+#vhcat .grid { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 16px; }
+#vhcat .card {
+  position: relative; display: flex; flex-direction: column; min-width: 0;
+  background: #fff; border: 1px solid var(--stone-line); border-radius: 12px; overflow: hidden;
+  transition: transform .25s cubic-bezier(.2,.8,.2,1), box-shadow .25s, border-color .25s;
+}
+#vhcat .card:hover { transform: translateY(-4px); border-color: var(--teal); box-shadow: 0 18px 38px rgba(38,36,31,0.16); }
+#vhcat .cover { position: relative; aspect-ratio: 600 / 849; overflow: hidden; background: var(--brown); }
+#vhcat .cover img { width: 100%; height: 100%; object-fit: cover; transition: transform .5s cubic-bezier(.2,.8,.2,1); }
+#vhcat .card:hover .cover img { transform: scale(1.04); }
+#vhcat .cover::after {
+  content: ''; position: absolute; left: 0; right: 0; bottom: 0; height: 38%;
+  background: linear-gradient(to top, rgba(38,36,31,0.88), transparent);
+}
+#vhcat .cover-name {
+  position: absolute; left: 14px; right: 14px; bottom: 12px; z-index: 2;
+  font-size: 21px; font-weight: 900; line-height: 0.95; letter-spacing: -0.03em; text-transform: uppercase; color: #fff;
+}
+#vhcat .pages {
+  position: absolute; top: 10px; left: 10px; z-index: 2;
+  font-size: 9px; font-weight: 800; letter-spacing: 0.16em; text-transform: uppercase; line-height: 1;
+  color: #fff; background: rgba(38,36,31,0.82); padding: 6px 8px; border-radius: 6px;
+}
+#vhcat .body { padding: 14px; display: flex; flex-direction: column; gap: 8px; flex: 1; }
+#vhcat .tag {
+  display: flex; align-items: center; gap: 7px;
+  font-size: 9.5px; font-weight: 800; letter-spacing: 0.16em; text-transform: uppercase; color: var(--teal-dark);
+}
+#vhcat .tag::before { content: ''; width: 7px; height: 7px; background: var(--orange); transform: rotate(45deg); flex-shrink: 0; }
+#vhcat .blurb { font-size: 13px; line-height: 1.5; color: var(--text); flex: 1; }
+#vhcat .go {
+  display: flex; align-items: center; justify-content: space-between; gap: 8px;
+  margin-top: 4px; padding-top: 11px; border-top: 1px solid #eee8dd;
+  font-size: 10.5px; font-weight: 800; letter-spacing: 0.16em; text-transform: uppercase; color: var(--ink);
+  transition: color .2s;
+}
+#vhcat .go small { margin-left: auto; font-size: 10px; font-weight: 700; letter-spacing: 0.06em; color: var(--mute); }
+#vhcat .card:hover .go { color: var(--teal-dark); }
+#vhcat .go svg { width: 13px; height: 13px; fill: currentColor; flex-shrink: 0; transition: transform .2s; }
+#vhcat .card:hover .go svg { transform: translateX(3px); }
+#vhcat .stretch { position: absolute; inset: 0; z-index: 3; border-radius: 12px; }
+
+/* ---------- MORE BRANDS ---------- */
+#vhcat .brands { padding-block: clamp(44px, 6vw, 72px) 10px; }
+#vhcat .bgrid { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 14px; }
+#vhcat .brand {
+  position: relative; display: block; aspect-ratio: 4 / 5; border-radius: 12px; overflow: hidden;
+  background: var(--brown); color: #fff !important;
+  transition: transform .25s cubic-bezier(.2,.8,.2,1), box-shadow .25s;
+}
+#vhcat .brand:hover { transform: translateY(-4px); box-shadow: 0 18px 38px rgba(38,36,31,0.22); }
+#vhcat .brand img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform .5s cubic-bezier(.2,.8,.2,1); }
+#vhcat .brand:hover img { transform: scale(1.05); }
+#vhcat .brand::before {
+  content: ''; position: absolute; inset: 0; z-index: 1;
+  background: linear-gradient(to top, rgba(38,36,31,0.92) 0%, rgba(38,36,31,0.35) 48%, rgba(38,36,31,0.05) 100%);
+}
+#vhcat .brand::after {
+  content: ''; position: absolute; left: 0; bottom: 0; height: 3px; width: 0; z-index: 3;
+  background: var(--teal); transition: width .35s ease;
+}
+#vhcat .brand:hover::after { width: 100%; }
+#vhcat .brand-in { position: absolute; left: 14px; right: 14px; bottom: 14px; z-index: 2; }
+#vhcat .brand-tag { display: block; font-size: 9px; font-weight: 800; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(255,255,255,0.65); }
+#vhcat .brand-name { display: block; margin-top: 5px; font-size: 18px; font-weight: 900; line-height: 1; letter-spacing: -0.02em; text-transform: uppercase; }
+#vhcat .brand-go { margin-top: 10px; display: flex; align-items: center; gap: 6px; font-size: 10px; font-weight: 800; letter-spacing: 0.16em; text-transform: uppercase; color: var(--teal); }
+#vhcat .brand-go svg { width: 11px; height: 11px; fill: currentColor; transition: transform .2s; }
+#vhcat .brand:hover .brand-go svg { transform: translate(2px, -2px); }
+#vhcat .brand.noimg { background: linear-gradient(140deg, var(--brown-2), var(--brown)); }
+
+#vhcat .empty { display: none; padding: 26px 0 0; font-size: 15px; color: var(--mute); }
+
+/* ---------- AVAILABILITY BAND ---------- */
+#vhcat .ask { padding-block: clamp(44px, 6vw, 72px) clamp(48px, 7vw, 88px); }
+#vhcat .ask-in {
+  display: grid; grid-template-columns: 1fr auto; gap: clamp(20px, 4vw, 48px); align-items: center;
+  background: var(--brown); border-radius: 16px; padding: clamp(28px, 4.5vw, 52px);
+  border-bottom: 4px solid var(--orange);
+}
+#vhcat .ask h2 { color: #fff; font-size: clamp(30px, 3.8vw, 46px); }
+#vhcat .ask p { margin-top: 14px; font-size: 15px; line-height: 1.65; color: rgba(255,255,255,0.6); max-width: 560px; }
+#vhcat .ask-btns { display: grid; gap: 10px; }
+#vhcat .fine { margin-top: 22px; font-size: 12px; line-height: 1.6; color: var(--mute); }
+
+/* ---------- MOTION ---------- */
+@keyframes vhc-rise { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: none; } }
+#vhcat .hero-l > * { animation: vhc-rise .8s cubic-bezier(.16,1,.3,1) both; }
+#vhcat .hero-l > *:nth-child(2) { animation-delay: .06s; }
+#vhcat .hero-l > *:nth-child(3) { animation-delay: .12s; }
+#vhcat .hero-l > *:nth-child(4) { animation-delay: .18s; }
+#vhcat .hero-l > *:nth-child(5) { animation-delay: .24s; }
+@media (prefers-reduced-motion: reduce) {
+  #vhcat *, #vhcat *::before, #vhcat *::after { animation: none !important; transition: none !important; }
 }
 
-/* ── Tools: search + filters ── */
-#vhcat .vhc-tools {
-  display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 14px;
-  margin: 28px 0 8px;
-}
-#vhcat .vhc-chips { display: flex; flex-wrap: wrap; gap: 8px; }
-#vhcat .vhc-chip {
-  font-family: inherit; font-size: 12px; text-transform: capitalize; letter-spacing: 0.02em;
-  padding: 9px 15px; border-radius: 6.4px; cursor: pointer;
-  background: transparent; color: #000; border: 2px solid #000;
-  transition: background 0.15s, color 0.15s;
-}
-#vhcat .vhc-chip:hover { background: var(--vh-soft); }
-#vhcat .vhc-chip.is-on { background: #000; color: #fff; }
-#vhcat .vhc-search { position: relative; flex: 0 1 280px; }
-#vhcat .vhc-search input {
-  width: 100%; font-family: inherit; font-size: 14px;
-  padding: 11px 14px 11px 38px; border-radius: 6.4px;
-  border: 1px solid var(--vh-line); background: #fff; color: var(--vh-body);
-  outline: none; transition: border-color 0.15s;
-}
-#vhcat .vhc-search input:focus { border-color: var(--vh-teal); }
-#vhcat .vhc-search svg { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); width: 16px; height: 16px; fill: #888; }
-
-/* ── Section label (matches homepage tiles) ── */
-#vhcat .vhc-label {
-  display: flex; align-items: center; gap: 12px; margin: 34px 0 16px;
-}
-#vhcat .vhc-label span {
-  font-family: var(--vh-head);
-  font-size: 11px; font-weight: 800; letter-spacing: 0.2em; text-transform: uppercase; color: var(--vh-ink);
-  white-space: nowrap;
-}
-#vhcat .vhc-label::after { content: ''; flex: 1; height: 1px; background: var(--vh-line); }
-
-/* ── Catalogue grid ── */
-#vhcat .vhc-grid {
-  display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 18px;
-}
-#vhcat .vhc-card {
-  display: flex; flex-direction: column;
-  background: #fff; border: 1px solid var(--vh-line); border-radius: 12px; overflow: hidden;
-  transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
-}
-#vhcat .vhc-card:hover { transform: translateY(-3px); box-shadow: 0 14px 34px rgba(0,0,0,0.10); border-color: #d4d4d4; }
-#vhcat .vhc-cover {
-  position: relative; display: block; aspect-ratio: 600 / 849; background: var(--vh-soft); overflow: hidden;
-}
-#vhcat .vhc-cover img {
-  width: 100%; height: 100%; object-fit: cover; display: block;
-  transition: transform 0.45s ease;
-}
-#vhcat .vhc-card:hover .vhc-cover img { transform: scale(1.035); }
-#vhcat .vhc-cover::after {
-  content: ''; position: absolute; left: 0; bottom: 0; height: 3px; width: 0;
-  background: var(--vh-teal); transition: width 0.35s ease;
-}
-#vhcat .vhc-card:hover .vhc-cover::after { width: 100%; }
-#vhcat .vhc-pages {
-  position: absolute; top: 10px; left: 10px;
-  font-family: var(--vh-head); font-size: 10px; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase;
-  background: rgba(38,36,31,0.86); color: #fff; padding: 5px 8px; border-radius: 4px;
-}
-#vhcat .vhc-body { padding: 16px 16px 18px; display: flex; flex-direction: column; flex: 1; }
-#vhcat .vhc-tag {
-  font-family: var(--vh-head); font-size: 10.5px; font-weight: 800; letter-spacing: 0.16em; text-transform: uppercase;
-  color: var(--vh-teal); margin: 0 0 6px;
-}
-#vhcat .vhc-name {
-  font-family: var(--vh-head); font-weight: 900; text-transform: uppercase;
-  font-size: 19px; line-height: 1.05; letter-spacing: -0.02em; color: var(--vh-ink); margin: 0 0 8px;
-}
-#vhcat .vhc-blurb { font-size: 13px; line-height: 1.5; color: var(--vh-muted); margin: 0 0 16px; flex: 1; }
-#vhcat .vhc-actions { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
-#vhcat .vhc-btn {
-  display: inline-flex; align-items: center; gap: 7px;
-  font-family: inherit; font-size: 12px; text-transform: capitalize;
-  padding: 11px 15px; border-radius: 6.4px;
-  background: #000; color: #fff !important; border: 2px solid #000;
-  transition: background 0.15s, border-color 0.15s;
-}
-#vhcat .vhc-btn:hover { background: var(--vh-teal); border-color: var(--vh-teal); }
-#vhcat .vhc-btn svg { width: 13px; height: 13px; fill: currentColor; }
-#vhcat .vhc-size { font-size: 11.5px; color: var(--vh-muted); white-space: nowrap; }
-
-/* ── Brand link tiles ── */
-#vhcat .vhc-note { font-size: 13px; color: var(--vh-muted); margin: -6px 0 16px; }
-#vhcat .vhc-brands { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 12px; }
-#vhcat .vhc-brand {
-  position: relative; display: flex; flex-direction: column; justify-content: space-between; gap: 18px;
-  min-height: 120px; padding: 16px; border-radius: 10px;
-  background: var(--vh-soft); border: 1px solid transparent; color: var(--vh-ink) !important;
-  overflow: hidden; transition: background 0.2s, border-color 0.2s;
-}
-#vhcat .vhc-brand::after {
-  content: ''; position: absolute; left: 0; bottom: 0; height: 3px; width: 0;
-  background: var(--vh-teal); transition: width 0.35s ease;
-}
-#vhcat .vhc-brand:hover { background: #fff; border-color: var(--vh-line); }
-#vhcat .vhc-brand:hover::after { width: 100%; }
-#vhcat .vhc-brand-tag {
-  font-family: var(--vh-head); font-size: 10px; font-weight: 800; letter-spacing: 0.16em; text-transform: uppercase; color: var(--vh-muted);
-}
-#vhcat .vhc-brand-name {
-  font-family: var(--vh-head); font-weight: 900; text-transform: uppercase;
-  font-size: 15.5px; line-height: 1.1; letter-spacing: -0.01em;
-}
-#vhcat .vhc-brand-go { display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--vh-teal); }
-#vhcat .vhc-brand-go svg { width: 12px; height: 12px; fill: currentColor; transition: transform 0.2s; }
-#vhcat .vhc-brand:hover .vhc-brand-go svg { transform: translate(2px, -2px); }
-
-/* ── Empty state + footer note + CTA ── */
-#vhcat .vhc-empty { display: none; padding: 30px 0; font-size: 14px; color: var(--vh-muted); }
-#vhcat .vhc-small { font-size: 12px; color: var(--vh-muted); margin: 30px 0 0; line-height: 1.6; }
-#vhcat .vhc-cta {
-  margin: 28px 0 10px; padding: 28px 32px; border-radius: 14px;
-  background: var(--vh-dark); color: #fff;
-  display: flex; align-items: center; justify-content: space-between; gap: 20px; flex-wrap: wrap;
-}
-#vhcat .vhc-cta h2 {
-  font-family: var(--vh-head); font-weight: 900; text-transform: uppercase; letter-spacing: -0.03em;
-  font-size: 24px; line-height: 1.05; margin: 0 0 6px; color: #fff;
-}
-#vhcat .vhc-cta p { margin: 0; font-size: 14px; color: rgba(255,255,255,0.75); }
-#vhcat .vhc-cta .vhc-btn { background: #fff; color: #000 !important; border-color: #fff; }
-#vhcat .vhc-cta .vhc-btn:hover { background: var(--vh-teal); border-color: var(--vh-teal); color: #fff !important; }
-
-/* ── Responsive ── */
+/* ---------- RESPONSIVE ---------- */
 @media (max-width: 1180px) {
-  #vhcat .vhc-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  #vhcat .grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  #vhcat .bgrid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
 }
 @media (max-width: 960px) {
-  #vhcat .vhc-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-  #vhcat .vhc-brands { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  #vhcat .hero { grid-template-columns: 1fr; min-height: auto; }
+  #vhcat .hero-r { height: 300px; order: -1; }
+  #vhcat .hero-r::before { background: linear-gradient(to top, var(--brown) 0%, rgba(38,36,31,.25) 45%, transparent 75%); }
+  #vhcat .hero-l { padding: 10px 34px 52px; }
+  #vhcat .promise-grid { grid-template-columns: 1fr 1fr; }
+  #vhcat .promise.main { grid-column: span 2; }
+  #vhcat .grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  #vhcat .bgrid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  #vhcat .ask-in { grid-template-columns: 1fr; }
 }
-@media (max-width: 760px) {
-  #vhcat { padding: 16px 16px 32px; }
-  #vhcat .vhc-hero { padding: 38px 24px 32px; border-radius: 12px; }
-  #vhcat .vhc-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
-  #vhcat .vhc-brands { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  #vhcat .vhc-search { flex: 1 1 100%; order: -1; }
-  #vhcat .vhc-chips { flex-wrap: nowrap; overflow-x: auto; padding-bottom: 4px; margin: 0 -2px; scrollbar-width: none; }
-  #vhcat .vhc-chips::-webkit-scrollbar { display: none; }
-  #vhcat .vhc-chip { flex: 0 0 auto; }
-  #vhcat .vhc-body { padding: 12px 12px 14px; }
-  #vhcat .vhc-name { font-size: 16px; }
-  #vhcat .vhc-blurb { font-size: 12px; }
-  #vhcat .vhc-actions { flex-direction: column; align-items: stretch; gap: 6px; }
-  #vhcat .vhc-btn { justify-content: center; }
-  #vhcat .vhc-size { text-align: center; }
-  #vhcat .vhc-cta { padding: 24px; }
+@media (max-width: 640px) {
+  #vhcat .hero-r { height: 220px; }
+  #vhcat .hero-l { padding: 0 20px 44px; text-align: center; align-items: center; }
+  #vhcat .hero .kicker { justify-content: center; font-size: 9px; }
+  #vhcat .hero h1 { font-size: clamp(44px, 14vw, 64px); }
+  #vhcat .hero-sub { font-size: 14px; }
+  #vhcat .hero-btns { flex-direction: column; width: 100%; }
+  #vhcat .hero-btns .btn { width: 100%; }
+  #vhcat .stats { width: 100%; justify-content: space-between; }
+  #vhcat .stat { flex: 1; padding: 0 6px; }
+  #vhcat .stat + .stat { padding-left: 6px; }
+  #vhcat .stat-n { font-size: 18px; }
+  #vhcat .stat-l { font-size: 8px; letter-spacing: 0.12em; }
+  #vhcat .promise-grid { grid-template-columns: 1fr; gap: 10px; }
+  #vhcat .promise.main { grid-column: auto; }
+  #vhcat .promise { padding: 16px; }
+  #vhcat .search { flex: 1 1 100%; order: -1; }
+  #vhcat .chips { flex-wrap: nowrap; overflow-x: auto; width: 100%; padding-bottom: 4px; scrollbar-width: none; }
+  #vhcat .chips::-webkit-scrollbar { display: none; }
+  #vhcat .chip { flex: 0 0 auto; }
+  #vhcat .grid, #vhcat .bgrid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+  #vhcat .cover-name { font-size: 17px; left: 10px; right: 10px; bottom: 10px; }
+  #vhcat .body { padding: 11px; }
+  #vhcat .blurb { font-size: 12px; }
+  #vhcat .go small { display: none; }
+  #vhcat .brand-name { font-size: 15px; }
+  #vhcat .brand-in { left: 11px; right: 11px; bottom: 11px; }
+  #vhcat .ask-btns .btn { width: 100%; }
 }
 </style>
 
-<section class="vhc-hero">
-  <p class="vhc-eyebrow">Brand catalogues</p>
-  <h1>Supplier<br><span>catalogues</span></h1>
-  <p>Browse the latest catalogues from the brands we stock. Prices shown are the brand's RRP.</p>
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-l">
+    <div class="kicker">Brand catalogues &middot; Price match</div>
+    <h1>Browse<br>the full<br><em>range</em><span class="dot">.</span></h1>
+    <p class="hero-sub">Catalogues from the brands we stock, all in one place. Found something you like? <b>Ask us about availability</b> and we'll check it for you.</p>
+    <div class="hero-btns">
+      <a class="btn btn-teal" href="#vhc-cats">See the catalogues</a>
+      <a class="btn btn-out" href="/contact">Check availability</a>
+    </div>
+    <div class="stats">
+      <div class="stat"><p class="stat-n" data-count-cats>10</p><p class="stat-l">Catalogues</p></div>
+      <div class="stat"><p class="stat-n">30<em>+</em></p><p class="stat-l">Brands</p></div>
+      <div class="stat"><p class="stat-n">Price <em>match</em></p><p class="stat-l">Most UK retailers</p></div>
+    </div>
+  </div>
+  <div class="hero-r">
+    <img src="https://voyagers-hook.github.io/images/rods1.png" alt="Fishing rods laid out on a wooden jetty">
+  </div>
 </section>
 
-<div class="vhc-tools">
-  <div class="vhc-chips" role="group" aria-label="Filter by fishing style">
-    <button type="button" class="vhc-chip is-on" data-style="all">All</button>
-    <button type="button" class="vhc-chip" data-style="carp">Carp</button>
-    <button type="button" class="vhc-chip" data-style="coarse">Coarse &amp; match</button>
-    <button type="button" class="vhc-chip" data-style="predator">Predator &amp; lure</button>
-    <button type="button" class="vhc-chip" data-style="sea">Sea</button>
-    <button type="button" class="vhc-chip" data-style="fly">Fly &amp; game</button>
+<!-- PROMISES -->
+<section class="promises">
+  <div class="wrap promise-grid">
+    <div class="promise main">
+      <span class="promise-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.6 13.4l-7.2 7.2a2 2 0 0 1-2.8 0L2 12V2h10l8.6 8.6a2 2 0 0 1 0 2.8z"/><circle cx="7" cy="7" r="1.5"/></svg></span>
+      <div>
+        <h3>We price match <em>most UK retailers</em></h3>
+        <p>Seen it cheaper somewhere else? Send us the link and we'll do our best to match it.</p>
+      </div>
+    </div>
+    <div class="promise">
+      <span class="promise-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20V3H6.5A2.5 2.5 0 0 0 4 5.5v14z"/><path d="M8 7h8M8 11h6"/></svg></span>
+      <div>
+        <h3>RRP isn't our price</h3>
+        <p>Catalogue prices are the brand's RRP. Ask us for ours.</p>
+      </div>
+    </div>
+    <div class="promise">
+      <span class="promise-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></span>
+      <div>
+        <h3>Not on our site?</h3>
+        <p>Message us and we'll check availability.</p>
+      </div>
+    </div>
   </div>
-  <label class="vhc-search">
-    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0016 9.5 6.5 6.5 0 109.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C8.01 14 6 11.99 6 9.5S8.01 5 10.5 5 15 7.01 15 9.5 12.99 14 10.5 14z"/></svg>
-    <input type="search" id="vhc-q" placeholder="Search brands" aria-label="Search brands">
-  </label>
-</div>
+</section>
 
-<div class="vhc-label"><span>Catalogues</span></div>
-<div class="vhc-grid" id="vhc-grid"></div>
-
-<div id="vhc-brand-wrap">
-  <div class="vhc-label"><span>More brands</span></div>
-  <p class="vhc-note">These brands don't publish a printed catalogue. Each link opens the full range with RRPs.</p>
-  <div class="vhc-brands" id="vhc-brands"></div>
-</div>
-
-<p class="vhc-empty" id="vhc-empty">No brands match that search. Try another name or pick a different style.</p>
-
-<div class="vhc-cta">
-  <div>
-    <h2>Looking for something?</h2>
-    <p>Tell us what you're after and we'll check if we can get it for you.</p>
+<!-- CATALOGUES -->
+<section class="cats" id="vhc-cats">
+  <div class="wrap">
+    <div class="head">
+      <div>
+        <div class="kicker">Read online or download</div>
+        <h2>The <em>catalogues</em><span class="dot">.</span></h2>
+      </div>
+      <p class="head-note">Tap a catalogue to open it. The bigger ones can take a moment on mobile data.</p>
+    </div>
+    <div class="tools">
+      <div class="chips" role="group" aria-label="Filter by fishing style">
+        <button type="button" class="chip on" data-style="all">All</button>
+        <button type="button" class="chip" data-style="carp">Carp</button>
+        <button type="button" class="chip" data-style="coarse">Coarse &amp; match</button>
+        <button type="button" class="chip" data-style="predator">Predator &amp; lure</button>
+        <button type="button" class="chip" data-style="sea">Sea</button>
+        <button type="button" class="chip" data-style="fly">Fly &amp; game</button>
+      </div>
+      <label class="search">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0016 9.5 6.5 6.5 0 109.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C8.01 14 6 11.99 6 9.5S8.01 5 10.5 5 15 7.01 15 9.5 12.99 14 10.5 14z"/></svg>
+        <input type="search" id="vhc-q" placeholder="Search brands" aria-label="Search brands">
+      </label>
+    </div>
+    <div class="grid" id="vhc-grid"></div>
   </div>
-  <a class="vhc-btn" href="/contact">Contact us</a>
-</div>
+</section>
 
-<p class="vhc-small">Catalogues are published by each brand. Products, specifications and RRPs may change, and our prices can differ from the RRP shown.</p>
+<!-- MORE BRANDS -->
+<section class="brands" id="vhc-brands-sec">
+  <div class="wrap">
+    <div class="head">
+      <div>
+        <div class="kicker">Also available</div>
+        <h2>More <em>brands</em><span class="dot">.</span></h2>
+      </div>
+      <p class="head-note">See the full range for each brand, then ask us for price and availability.</p>
+    </div>
+    <div class="bgrid" id="vhc-brands"></div>
+    <p class="empty" id="vhc-empty">Nothing matches that search. Try another brand name.</p>
+  </div>
+</section>
+
+<!-- AVAILABILITY -->
+<section class="ask">
+  <div class="wrap">
+    <div class="ask-in">
+      <div>
+        <div class="kicker">Spotted something?</div>
+        <h2>Ask about <em>availability</em><span class="dot">.</span></h2>
+        <p>Send us the brand and product code from the catalogue and we'll come back to you with our price and stock. Seen it cheaper at another UK retailer? Add the link and we'll look at matching it.</p>
+      </div>
+      <div class="ask-btns">
+        <a class="btn btn-teal" href="/contact">Check availability</a>
+        <a class="btn btn-out" href="/contact">Price match request</a>
+      </div>
+    </div>
+    <p class="fine">Catalogues are published by each brand. Prices in them are RRP and are not necessarily our selling price. Products and specifications can change. Price matching covers most UK retailers and is at our discretion.</p>
+  </div>
+</section>
 
 <script>
 (function () {
-  /* ── Where the PDFs and covers live ── */
+  /* ======================= EDIT ME ======================= */
   var BASE = 'https://voyagers-hook.github.io/Catalogues/';
 
-  /* ── Catalogues (file = PDF name without .pdf, cover = covers/<file>.jpg) ── */
+  /* file = PDF name without .pdf. The cover is covers/<file>.jpg */
   var CATALOGUES = [
     { name: 'Wychwood Carp', file: 'Wychwood-Carp', tag: 'Carp', styles: ['carp'], pages: 101, size: '25 MB',
       blurb: 'Rods, reels, bivvies, bedchairs, luggage and carp care.' },
+    { name: 'Mikado', file: 'Mikado-2027', tag: 'Full range', styles: ['carp', 'coarse', 'predator', 'sea'], pages: 452, size: '59 MB',
+      blurb: 'The whole 2027 range: rods, reels, lures, lines and terminal tackle.' },
     { name: 'Agitator', file: 'Agitator', tag: 'Predator & lure', styles: ['predator'], pages: 34, size: '8 MB',
-      blurb: 'Lure and deadbait rods, reels, luggage and predator accessories.' },
+      blurb: 'Lure and deadbait rods, reels, luggage and predator kit.' },
     { name: 'MAP', file: 'MAP', tag: 'Coarse & match', styles: ['coarse'], pages: 82, size: '15 MB',
       blurb: 'Poles, rods, seatboxes, luggage and match accessories.' },
     { name: 'Maver', file: 'Maver-2026', tag: 'Coarse & match', styles: ['coarse'], pages: 73, size: '19 MB',
-      blurb: 'Poles, rods, seatboxes, nets, floats and match tackle for 2026.' },
-    { name: 'Mikado', file: 'Mikado-2027', tag: 'All styles', styles: ['carp', 'coarse', 'predator', 'sea'], pages: 452, size: '59 MB',
-      blurb: 'The full 2027 range: rods, reels, lures, lines and terminal tackle.' },
+      blurb: 'Poles, rods, seatboxes, nets, floats and match tackle.' },
     { name: 'Wychwood Game', file: 'Wychwood-Game', tag: 'Fly & game', styles: ['fly'], pages: 42, size: '7 MB',
       blurb: 'Fly rods, reels, lines, fly boxes and game luggage.' },
     { name: 'Icon', file: 'Icon', tag: 'Sea', styles: ['sea'], pages: 10, size: '1 MB',
@@ -290,61 +413,75 @@
       blurb: 'Good-value tackle for coarse, carp, sea and game fishing.' },
     { name: 'Mustad', file: 'Mustad', tag: 'Hooks & terminal', styles: ['sea', 'predator', 'coarse', 'carp'], pages: 36, size: '2 MB',
       blurb: 'Hooks, swivels, rigs, lures and tools.' },
-    { name: 'More brands from Leeda', file: 'More-Brands-from-Leeda', tag: 'All styles', styles: ['coarse', 'carp', 'predator', 'sea', 'fly'], pages: 87, size: '7 MB',
+    { name: 'More from Leeda', file: 'More-Brands-from-Leeda', tag: 'Mixed brands', styles: ['coarse', 'carp', 'predator', 'sea', 'fly'], pages: 87, size: '7 MB',
       blurb: 'Airflo, Dinsmores, Kamasan, Lowrance, Maxima, Mepps, Petzl and more.' }
   ];
 
-  /* ── Brands without a catalogue (styles: [] shows them under every filter) ── */
+  /* styles: [] shows a brand under every filter */
+  var WW = 'https://wadingwaters.com/cdn/shop/files/';
   var BRANDS = [
-    { name: 'Thomas & Thomas', tag: 'Fly rods', styles: ['fly'], url: 'https://wadingwaters.com/pages/thomas-and-thomas' },
-    { name: 'Douglas Fly Fishing', tag: 'Fly rods', styles: ['fly'], url: 'https://wadingwaters.com/pages/douglas-fly-fishing' },
-    { name: 'Shilton Fly Reels', tag: 'Fly reels', styles: ['fly'], url: 'https://wadingwaters.com/pages/shilton-reels' },
-    { name: 'Broder Fly Fishing', tag: 'Fly fishing', styles: ['fly'], url: 'https://wadingwaters.com/pages/broder-fly-fishing' },
-    { name: 'Reel Fly Fishing', tag: 'Fly fishing', styles: ['fly'], url: 'https://wadingwaters.com/pages/reel-fly-fishing' },
-    { name: 'Finntrail', tag: 'Waders & clothing', styles: [], url: 'https://wadingwaters.com/pages/finntrail' },
-    { name: 'Colter', tag: 'Backcountry gear', styles: [], url: 'https://wadingwaters.com/pages/colter-backcountry' },
-    { name: 'Backcountry Skinz', tag: 'Outdoor gear', styles: [], url: 'https://wadingwaters.com/pages/backcountry-skinz' },
-    { name: 'Cling', tag: 'Magnetic accessories', styles: [], url: 'https://wadingwaters.com/pages/cling-fishing' },
-    { name: 'ASSO', tag: 'Fishing line', styles: [], url: 'https://wadingwaters.com/pages/asso' }
+    { name: 'Thomas & Thomas', tag: 'Fly rods', styles: ['fly'], url: 'https://wadingwaters.com/pages/thomas-and-thomas',
+      img: WW + '66a3dba0dc116e31d143029a_sextant_fly_rod_lifestyle2.webp?v=1757083983&width=700' },
+    { name: 'Douglas', tag: 'Fly rods', styles: ['fly'], url: 'https://wadingwaters.com/pages/douglas-fly-fishing',
+      img: WW + 'WadingWaters_2023_HaddonHallbeat_37.jpg?v=1755160216&width=700' },
+    { name: 'Shilton', tag: 'Fly reels', styles: ['fly'], url: 'https://wadingwaters.com/pages/shilton-reels',
+      img: WW + 'sHILTON_cr.jpg?v=1755265129&width=700' },
+    { name: 'Reel Fly Fishing', tag: 'Fly reels', styles: ['fly'], url: 'https://wadingwaters.com/pages/reel-fly-fishing',
+      img: WW + '5b140e61-c87855_2bcbb3d484eb464c9963f46fc7cad2bb_mv2.jpg?v=1754662520&width=700' },
+    { name: 'Broder', tag: 'Fly fishing', styles: ['fly'], url: 'https://wadingwaters.com/pages/broder-fly-fishing',
+      img: WW + '5208fc78-c87855_144d32b309f443979f7c8c9f5817f54c_mv2.webp?v=1754662510&width=700' },
+    { name: 'Finntrail', tag: 'Waders & clothing', styles: [], url: 'https://wadingwaters.com/pages/finntrail',
+      img: WW + 'xjp3yokie2916jy5znk04ylgz8suszi0.jpg?v=1780927708&width=700' },
+    { name: 'Colter', tag: 'Backcountry gear', styles: [], url: 'https://wadingwaters.com/pages/colter-backcountry',
+      img: WW + 'external-file_edited.avif?v=1757862195&width=700' },
+    { name: 'Backcountry Skinz', tag: 'Outdoor gear', styles: [], url: 'https://wadingwaters.com/pages/backcountry-skinz',
+      img: WW + '1a49d068-c87855_0858db286e9242ccb7a70ae57c6d7ea1_mv2.jpg?v=1780681852&width=700' },
+    { name: 'Cling', tag: 'Magnetic accessories', styles: [], url: 'https://wadingwaters.com/pages/cling-fishing',
+      img: WW + 'cling-mag-grab-mini-on-hat-header.webp?v=1755116710&width=700' },
+    { name: 'ASSO', tag: 'Fishing line', styles: [], url: 'https://wadingwaters.com/pages/asso',
+      img: WW + '56b3db61-6b98-4070-b92c-6e5a7e20a58e_1.jpg?v=1760969081&width=700' }
   ];
+  /* ===================== END EDIT ME ===================== */
 
-  var ICON_PDF = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6zm4 18H6V4h7v5h5v11z"/></svg>';
-  var ICON_OUT = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3h7v7h-2V6.41l-9.29 9.3-1.42-1.42L17.59 5H14V3zM5 5h6v2H7v10h10v-4h2v6H5V5z"/></svg>';
-
+  var ARROW = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/></svg>';
+  var OUT = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3h7v7h-2V6.41l-9.29 9.3-1.42-1.42L17.59 5H14V3zM5 5h6v2H7v10h10v-4h2v6H5V5z"/></svg>';
   function esc(t) { return String(t).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
 
+  var root = document.getElementById('vhcat');
   var grid = document.getElementById('vhc-grid');
-  var brandsEl = document.getElementById('vhc-brands');
-  var brandWrap = document.getElementById('vhc-brand-wrap');
+  var bgrid = document.getElementById('vhc-brands');
+  var bsec = document.getElementById('vhc-brands-sec');
   var empty = document.getElementById('vhc-empty');
   var q = document.getElementById('vhc-q');
-  var chips = document.querySelectorAll('#vhcat .vhc-chip');
+  var chips = root.querySelectorAll('.chip');
   var style = 'all';
+
+  root.querySelector('[data-count-cats]').textContent = CATALOGUES.length;
 
   grid.innerHTML = CATALOGUES.map(function (c, i) {
     var pdf = BASE + encodeURIComponent(c.file) + '.pdf';
     var cover = BASE + 'covers/' + encodeURIComponent(c.file) + '.jpg';
-    return '<article class="vhc-card" data-i="' + i + '">' +
-      '<a class="vhc-cover" href="' + pdf + '" target="_blank" rel="noopener" aria-label="Open the ' + esc(c.name) + ' catalogue">' +
-        '<img src="' + cover + '" alt="' + esc(c.name) + ' catalogue" loading="lazy" width="600" height="849">' +
-        '<span class="vhc-pages">' + c.pages + ' pages</span>' +
-      '</a>' +
-      '<div class="vhc-body">' +
-        '<p class="vhc-tag">' + esc(c.tag) + '</p>' +
-        '<h3 class="vhc-name">' + esc(c.name) + '</h3>' +
-        '<p class="vhc-blurb">' + esc(c.blurb) + '</p>' +
-        '<div class="vhc-actions">' +
-          '<a class="vhc-btn" href="' + pdf + '" target="_blank" rel="noopener">' + ICON_PDF + 'View catalogue</a>' +
-          '<span class="vhc-size">PDF, ' + esc(c.size) + '</span>' +
-        '</div>' +
+    return '<article class="card" data-i="' + i + '">' +
+      '<div class="cover">' +
+        '<img src="' + cover + '" alt="" loading="lazy" width="600" height="849">' +
+        '<span class="pages">' + c.pages + ' pages</span>' +
+        '<span class="cover-name">' + esc(c.name) + '</span>' +
       '</div>' +
+      '<div class="body">' +
+        '<p class="tag">' + esc(c.tag) + '</p>' +
+        '<p class="blurb">' + esc(c.blurb) + '</p>' +
+        '<span class="go">Open<small>PDF ' + esc(c.size) + '</small>' + ARROW + '</span>' +
+      '</div>' +
+      '<a class="stretch" href="' + pdf + '" target="_blank" rel="noopener" aria-label="Open the ' + esc(c.name) + ' catalogue (PDF, ' + esc(c.size) + ')"></a>' +
     '</article>';
   }).join('');
 
-  brandsEl.innerHTML = BRANDS.map(function (b, i) {
-    return '<a class="vhc-brand" data-i="' + i + '" href="' + esc(b.url) + '" target="_blank" rel="noopener">' +
-      '<span><span class="vhc-brand-tag">' + esc(b.tag) + '</span><br><span class="vhc-brand-name">' + esc(b.name) + '</span></span>' +
-      '<span class="vhc-brand-go">View range ' + ICON_OUT + '</span>' +
+  bgrid.innerHTML = BRANDS.map(function (b, i) {
+    var img = b.img ? '<img src="' + esc(b.img) + '" alt="" loading="lazy" onerror="this.parentNode.classList.add(\'noimg\');this.remove()">' : '';
+    return '<a class="brand' + (b.img ? '' : ' noimg') + '" data-i="' + i + '" href="' + esc(b.url) + '" target="_blank" rel="noopener">' + img +
+      '<span class="brand-in"><span class="brand-tag">' + esc(b.tag) + '</span>' +
+      '<span class="brand-name">' + esc(b.name) + '</span>' +
+      '<span class="brand-go">View range ' + OUT + '</span></span>' +
     '</a>';
   }).join('');
 
@@ -353,29 +490,22 @@
     var hay = (item.name + ' ' + item.tag + ' ' + (item.blurb || '')).toLowerCase();
     return styleOk && (!term || hay.indexOf(term) !== -1);
   }
-
   function apply() {
-    var term = (q.value || '').trim().toLowerCase();
-    var shown = 0, shownBrands = 0;
-    grid.querySelectorAll('.vhc-card').forEach(function (el) {
-      var ok = matches(CATALOGUES[+el.getAttribute('data-i')], term);
-      el.style.display = ok ? '' : 'none'; if (ok) shown++;
+    var term = (q.value || '').trim().toLowerCase(), a = 0, b = 0;
+    grid.querySelectorAll('.card').forEach(function (el) {
+      var ok = matches(CATALOGUES[+el.getAttribute('data-i')], term); el.style.display = ok ? '' : 'none'; if (ok) a++;
     });
-    brandsEl.querySelectorAll('.vhc-brand').forEach(function (el) {
-      var ok = matches(BRANDS[+el.getAttribute('data-i')], term);
-      el.style.display = ok ? '' : 'none'; if (ok) shownBrands++;
+    bgrid.querySelectorAll('.brand').forEach(function (el) {
+      var ok = matches(BRANDS[+el.getAttribute('data-i')], term); el.style.display = ok ? '' : 'none'; if (ok) b++;
     });
-    grid.previousElementSibling.style.display = shown ? '' : 'none';
-    brandWrap.style.display = shownBrands ? '' : 'none';
-    empty.style.display = (shown || shownBrands) ? 'none' : 'block';
+    bgrid.style.display = b ? '' : 'none';
+    bsec.querySelector('.head').style.display = b ? '' : 'none';
+    empty.style.display = (a || b) ? 'none' : 'block';
   }
-
   chips.forEach(function (ch) {
     ch.addEventListener('click', function () {
-      chips.forEach(function (c) { c.classList.remove('is-on'); });
-      ch.classList.add('is-on');
-      style = ch.getAttribute('data-style');
-      apply();
+      chips.forEach(function (c) { c.classList.remove('on'); });
+      ch.classList.add('on'); style = ch.getAttribute('data-style'); apply();
     });
   });
   q.addEventListener('input', apply);
