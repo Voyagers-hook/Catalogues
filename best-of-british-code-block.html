@@ -576,7 +576,9 @@
         p.brand = b; p.cat = catOf(p.name); items.push(p); counts[b] = (counts[b] || 0) + 1;
       });
     });
-    items.sort(function (a, b) { return (b.inStock - a.inStock) || (MADE[b.brand] ? 1 : 0) - (MADE[a.brand] ? 1 : 0) || a.name.localeCompare(b.name); });
+    items.sort(function (a, b) {
+      return (b.inStock - a.inStock) || CHIPS.indexOf(a.cat) - CHIPS.indexOf(b.cat) || a.name.localeCompare(b.name);
+    });
     if (!items.length) throw new Error('empty');
     var n = items.length;
     root.querySelector('[data-n-prod]').innerHTML = (n >= 10 ? Math.floor(n / 10) * 10 + '<em>+</em>' : n);
