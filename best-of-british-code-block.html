@@ -336,7 +336,7 @@
     </div>
     <div class="promise">
       <span class="promise-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg></span>
-      <div><h3>Small British firms</h3><p>Independent, angler-run brands. Your money goes to people, not shareholders.</p></div>
+      <div><h3>Small British firms</h3><p>Independent, angler-run brands designed in Britain. Your money goes to people, not shareholders.</p></div>
     </div>
     <div class="promise">
       <span class="promise-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1 3h15v13H1zM16 8h4l3 3v5h-7z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg></span>
@@ -359,7 +359,7 @@
       <article class="feat" data-mark="Filthy">
         <span class="feat-tag"><i></i>Coming soon</span>
         <h3>Filthy<br><em>Bait Co</em><span class="dot">.</span></h3>
-        <p class="feat-who">Harry &amp; Joe &middot; Independent British bait</p>
+        <p class="feat-who">Harry &amp; Joe &middot; Made in Britain</p>
         <p class="story">Harry and Joe's bait company, and the newest name on our list. They're making a name with their 6mm wafters in Strawberry Squid and Pineapple. Our first order goes in shortly, and it will be on this page the day it arrives.</p>
         <div class="feat-foot">
           <div class="soon-box">
@@ -383,8 +383,8 @@
       <article class="feat kai" data-mark="Kai">
         <span class="feat-tag"><i></i>On the shelf now</span>
         <h3>Kai<br><em>Fishing Co</em><span class="dot">.</span></h3>
-        <p class="feat-who">Family run &middot; Two generations of anglers</p>
-        <p class="story">A UK-owned, family-run carp tackle brand built by anglers. Their aim is simple: reliable, practical terminal tackle that gives real value. Their Lead Clip Action Pack has five complete lead clip setups in one pack, ready to rig.</p>
+        <p class="feat-who">Family run &middot; Designed in Britain</p>
+        <p class="story">A small, UK-owned, family-run carp tackle brand, with two generations of anglers behind it. Everything is designed here in Britain. Their aim is simple: reliable, practical terminal tackle that gives real value. Their Lead Clip Action Pack has five complete lead clip setups in one pack, ready to rig.</p>
         <div class="feat-foot"><div class="feat-prods" id="vhb-kai"></div></div>
       </article>
     </div>
@@ -419,7 +419,7 @@
         <div class="kicker">The people behind it</div>
         <h2>Meet the <em>makers</em><span class="dot">.</span></h2>
       </div>
-      <p class="head-note">Orange means made in Britain. Teal means a small British-owned business.</p>
+      <p class="head-note">Orange means made in Britain. Teal means designed in Britain by a small independent.</p>
     </div>
     <div class="mgrid" id="vhb-mgrid"></div>
   </div>
@@ -453,17 +453,17 @@
       story: 'One of the oldest carp bait brands in the UK, going since the early eighties. Every boilie, particle and liquid is made at Copdock Mill\'s own factory in Suffolk.' },
     { key: 'copdock', name: 'Copdock Mill', where: 'Ipswich, Suffolk', made: true,
       story: 'Herbert Gladwell started Copdock Mill in 1912. Over a hundred years later the family firm is still sourcing hemp, maize, particles and groundbait for anglers across the country.' },
-    { key: 'pegno1', name: 'Peg No.1', where: 'By Copdock Angling, Suffolk', made: false,
+    { key: 'pegno1', name: 'Peg No.1', where: 'By Copdock Angling, Suffolk', made: true,
       story: 'A premium match fishing brand created by Copdock Angling. Groundbaits, method pellets and liquids built for commercial match fishing.' },
-    { key: 'ringers', name: 'Ringers', where: 'Match & carp bait', made: false,
+    { key: 'ringers', name: 'Ringers', where: 'Match & carp bait', made: true,
       story: 'More than 30 years in match fishing, and used by some of the top international match anglers. Boilies, pellets, method mix and groundbait for carp and match.' },
-    { key: 'fjuka', name: 'Fjuka', where: 'UK bait brand', made: false,
+    { key: 'fjuka', name: 'Fjuka', where: 'UK bait brand', made: true,
       story: 'From Dave Preston, the angler who founded Preston Innovations. Every Fjuka bait carries his Sensate attractant, built to put taste and smell into the water fast.' },
     { key: 'wcl', name: 'West Country Leads', where: 'Cornwall', made: true,
       story: 'Carp leads from the West Country in matt and textured finishes that sit quietly on the bottom. Distance, flat pear, gripper and zip patterns in every weight you need.' }
   ];
   var NAMES = { baylys: 'Baylys Baits', crafty: 'Crafty Catcher', copdock: 'Copdock Mill', pegno1: 'Peg No.1', ringers: 'Ringers', fjuka: 'Fjuka', wcl: 'West Country Leads', kai: 'Kai Fishing Co', filthy: 'Filthy Bait Co' };
-  var MADE = { crafty: 1, copdock: 1, wcl: 1, baylys: 1 };
+  var MADE = { crafty: 1, copdock: 1, pegno1: 1, ringers: 1, fjuka: 1, wcl: 1, baylys: 1, filthy: 1 };
   var SOON = ['filthy', 'baylys']; /* coming soon brands, counted in the hero */
 
   /* Category is picked from the product name. First match wins. */
@@ -545,7 +545,7 @@
       var n = counts[m.key] || 0;
       return '<article class="maker' + (m.made ? ' made' : '') + '">' +
         '<div class="maker-top"><div><h3>' + esc(m.name) + '</h3><p class="maker-where">' + esc(m.where) + '</p></div>' +
-        '<span class="maker-type">' + (m.made ? 'Made in Britain' : 'British brand') + '</span></div>' +
+        '<span class="maker-type">' + (m.made ? 'Made in Britain' : 'Designed in Britain') + '</span></div>' +
         '<p>' + esc(m.story) + '</p>' +
         '<button type="button" class="maker-go" data-b="' + m.key + '"' + (n ? '' : ' disabled') + '>' +
           (n ? 'Shop ' + esc(m.name) + ' (' + n + ') ' + ARROW : 'Back in stock soon') + '</button>' +
