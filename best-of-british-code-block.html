@@ -1,6 +1,6 @@
 <!--
   ============================================================
-  VOYAGERS HOOK : BEST OF BRITISH PAGE  (v5)
+  VOYAGERS HOOK : BEST OF BRITISH PAGE  (v6)
   Squarespace: one section, padding 0 on all sides, ONE Code Block,
   paste all of this.
 
@@ -150,6 +150,9 @@
 #vhbob .fp .btag { align-self: flex-start; background: var(--orange); color: var(--brown); }
 #vhbob .fp .btag.designed { background: transparent; color: #fff; box-shadow: inset 0 0 0 1.5px rgba(255,255,255,0.6); }
 #vhbob .fp-story { margin-top: 18px; font-size: 15px; line-height: 1.7; max-width: 520px; }
+#vhbob .fp-quote { margin-top: 18px; padding-left: 16px; border-left: 3px solid var(--orange); max-width: 520px; }
+#vhbob .fp-quote p { font-size: 16px; line-height: 1.55; font-weight: 700; color: #fff; }
+#vhbob .fp-quote cite { display: block; margin-top: 8px; font-style: normal; font-size: 10px; font-weight: 800; letter-spacing: .18em; text-transform: uppercase; color: rgba(255,255,255,0.5); }
 #vhbob .fp-prods { margin-top: auto; padding-top: 24px; display: grid; gap: 8px; }
 #vhbob .mini {
   position: relative; display: grid; grid-template-columns: 56px 1fr auto; gap: 14px; align-items: center;
@@ -287,20 +290,22 @@
   var BRANDS = [
     { key: 'filthy', name: 'Filthy Bait Co', place: 'South Wales', flag: 'Flag_of_Wales.svg', miles: '', made: true, feature: true,
       img: 'https://156444533.cdn6.editmysite.com/uploads/1/5/6/4/156444533/FGPDN53RT37FI4LXH3BPQWZL.png?width=1200',
-      story: 'Harry was fishing mad, and at 12 he started making his own bait. Filthy Bait Co is Harry and Joe\'s company, based in South Wales, where part of the Voyagers Hook family comes from.' },
+      story: 'Harry is fishing mad. At the age of 12 he started Filthy Bait Co with Joe, making their own bait in South Wales, where part of the Voyagers Hook family comes from.' },
     { key: 'baylys', name: 'Baylys Baits', place: 'Clacton-on-Sea, Essex', flag: 'Flag_of_Essex.svg', miles: 180, made: true, feature: true,
       img: 'https://cdn.shopify.com/s/files/1/0458/2896/4516/files/IMG-8352.jpg?v=1720185507&width=1200',
       story: 'Martin Bayly has fished for carp for over 25 years. He made his own bait long before starting Baylys Baits in 2020 with four recipes: Apex, Gods Gift, Pineapple Express and Secret Sauce. The family still make it all by hand.' },
-    { key: 'kai', name: 'Kai Fishing Co', place: 'United Kingdom', flag: 'Flag_of_the_United_Kingdom.svg', miles: '', made: false, feature: true,
+    { key: 'kai', name: 'Kai Fishing Co', place: 'Gainsborough, Lincolnshire', flag: 'Flag_of_Lincolnshire.svg', miles: 194, made: false, feature: true,
       img: 'https://cdn.shopify.com/s/files/1/1056/0864/2900/files/IMG_0004-2.jpg?v=1785183851&width=1200',
-      story: 'Kai Fishing Co is a UK-owned, family-run brand with two generations of anglers behind it. They design carp end tackle that is practical and good value. Their Lead Clip Action Pack has five lead clip setups with tail rubbers, swivels and 2m of rig tubing, so you can tie up and fish.' },
+      story: 'Tyler Marshall set up Kai Fishing Co in Gainsborough out of a love of fishing. It\'s a growing, family-run brand that listens to its customers and only releases tackle it would use on the bank. Their Lead Clip Action Pack has five lead clip setups with tail rubbers, swivels and 2m of rig tubing.',
+      quote: 'Every product must be something we believe in, something we would use ourselves and something we are proud to put the Kai Fishing Co name on.',
+      quoteBy: 'Tyler Marshall, Managing Director' },
     { key: 'crafty', name: 'Crafty Catcher', place: 'Copdock, Suffolk', flag: 'Flag_of_Suffolk.svg', miles: 185, made: true,
       story: 'One of the oldest carp bait brands in the UK, going since the early eighties. Made at Copdock Mill\'s own bait factory.' },
     { key: 'copdock', name: 'Copdock Angling', place: 'Copdock, Suffolk', flag: 'Flag_of_Suffolk.svg', miles: 185, made: true,
       story: 'From Copdock Mill, a family firm since Herbert Gladwell started it in 1912. Hemp, maize, particles, groundbait and liquids.' },
     { key: 'pegno1', name: 'Peg No.1', place: 'Copdock, Suffolk', flag: 'Flag_of_Suffolk.svg', miles: 185, made: true,
       story: 'Copdock Angling\'s match bait range. Groundbaits, method pellets and liquids for commercial fisheries.' },
-    { key: 'ringers', name: 'Ringers', place: 'England', flag: 'Flag_of_England.svg', miles: '', made: true,
+    { key: 'ringers', name: 'Ringers', place: 'Northampton, Northamptonshire', flag: 'Flag_of_Northamptonshire.svg', miles: 125, made: true,
       story: 'Match bait used by top international match anglers for over 30 years. Wafters, pellets, boilies and groundbait.' },
     { key: 'fjuka', name: 'Fjuka', place: 'Bridgnorth, Shropshire', flag: 'Flag_of_Shropshire.svg', miles: 115, made: true,
       story: 'Dave Preston started Preston Innovations, then set up Fjuka in Bridgnorth. Every Fjuka bait carries his Sensate attractant.' },
@@ -352,7 +357,9 @@
       : '<div class="fp-ask"><a href="/contact">Ask us about ' + esc(b.name) + '</a></div>';
     return '<article class="fp" id="vhb-' + b.key + '">' +
       '<div class="fp-media">' + (b.img ? '<img src="' + esc(b.img) + '" alt="' + esc(b.name) + '" loading="lazy">' : '') + '</div>' +
-      '<div class="fp-body">' + head(b) + '<p class="fp-story">' + esc(b.story) + '</p>' + prods + '</div>' +
+      '<div class="fp-body">' + head(b) + '<p class="fp-story">' + esc(b.story) + '</p>' +
+        (b.quote ? '<blockquote class="fp-quote"><p>\u201c' + esc(b.quote) + '\u201d</p><cite>' + esc(b.quoteBy || '') + '</cite></blockquote>' : '') +
+        prods + '</div>' +
       '<div class="fp-all" hidden></div>' +
     '</article>';
   }
