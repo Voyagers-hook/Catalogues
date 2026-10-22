@@ -13,6 +13,10 @@
   Copy one line in BRANDS and edit it. vendor must match the
   supplier's spelling. col and img are optional.
 
+  COPDOCK BRANDS (Crafty Catcher, Peg No.1, Ringers and the rest)
+  load from copdock-ranges.json, a snapshot taken 22 Oct 2026.
+  Ask Claude to refresh it when the range changes.
+
   Style keys: carp, coarse, predator, sea, fly
   Colours: brown #26241f | stone #f1ece3 | teal #0397b2 | orange #ff751f
   Font: the same system font stack as the homepage hero and sale page
@@ -207,6 +211,9 @@
 #vhcat .brand-go svg { width: 11px; height: 11px; fill: currentColor; transition: transform .2s; }
 #vhcat .brand:hover .brand-go svg { transform: translate(2px, -2px); }
 #vhcat .brand.noimg { background: linear-gradient(140deg, var(--brown-2), var(--brown)); }
+#vhcat .brand.pack { background: #fff; }
+#vhcat .brand.pack img { object-fit: contain; padding: 8% 10% 34%; }
+#vhcat .brand.pack::before { background: linear-gradient(to top, rgba(38,36,31,0.95) 0%, rgba(38,36,31,0.85) 26%, rgba(38,36,31,0) 46%); }
 
 #vhcat .empty { display: none; padding: 26px 0 0; font-size: 15px; color: var(--mute); }
 
@@ -490,7 +497,24 @@ html.vhcm-lock, html.vhcm-lock body { overflow: hidden !important; }
      Prices shown are RRP. No links to the supplier are shown. */
   var SUPPLIER = 'https://wadingwaters.com';
   var WW = SUPPLIER + '/cdn/shop/files/';
+  /* Copdock brands: a saved snapshot of the range (copdock-ranges.json in the
+     Catalogues repo). key = the brand name used in that file. */
+  var BSI = 'https://baitsuperstore.com/wp-content/uploads/';
   var BRANDS = [
+    { name: 'Crafty Catcher', tag: 'Carp bait', styles: ['carp'], src: 'copdock', key: 'Crafty Catcher', pack: true,
+      img: BSI + '2026/07/Scopex-Big-hit-900g.jpg' },
+    { name: 'Peg No.1', tag: 'Match bait', styles: ['coarse'], src: 'copdock', key: 'Peg No.1', pack: true,
+      img: BSI + '2023/03/Peg-No1-Premium-GROUNDBAIT-GROUP-2024.jpg' },
+    { name: 'Ringers', tag: 'Match & carp bait', styles: ['coarse', 'carp'], src: 'copdock', key: 'Ringers', pack: true,
+      img: BSI + '2023/08/Ringers-Duo-Wafters-Orange-Yellow.png' },
+    { name: 'Copdock Angling', tag: 'Bait & particles', styles: ['coarse', 'carp'], src: 'copdock', key: 'Copdock Angling', pack: true,
+      img: BSI + '2025/06/CA-Groundbait-2kg-Scopex-SupremeStrawbery-3d.jpg' },
+    { name: 'Van Den Eynde', tag: 'Groundbait', styles: ['coarse'], src: 'copdock', key: 'Van Den Eynde', pack: true,
+      img: BSI + '2023/03/VDE-Supermatch.png' },
+    { name: 'Coppens', tag: 'Pellets', styles: ['coarse', 'carp'], src: 'copdock', key: 'Coppens', pack: true,
+      img: BSI + '2023/03/Coppens-Giant-Marine-Halibut.jpg' },
+    { name: 'Skretting', tag: 'Pellets', styles: ['coarse', 'carp'], src: 'copdock', key: 'Skretting', pack: true,
+      img: BSI + '2023/03/Skretting-Coarse-Fish-Sinking-Carp-Pellets.png' },
     { name: 'Douglas', tag: 'Fly rods', styles: ['fly'], vendor: 'Douglas',
       img: WW + 'WadingWaters_2023_HaddonHallbeat_37.jpg?v=1755160216&width=700' },
     { name: 'Shilton', tag: 'Fly reels', styles: ['fly'], vendor: 'Shilton', col: 'shilton',
@@ -544,7 +568,7 @@ html.vhcm-lock, html.vhcm-lock body { overflow: hidden !important; }
 
   bgrid.innerHTML = BRANDS.map(function (b, i) {
     var img = b.img ? '<img src="' + esc(b.img) + '" alt="" loading="lazy" onerror="this.parentNode.classList.add(\'noimg\');this.remove()">' : '';
-    return '<button type="button" class="brand' + (b.img ? '' : ' noimg') + '" data-i="' + i + '" aria-haspopup="dialog">' + img +
+    return '<button type="button" class="brand' + (b.img ? '' : ' noimg') + (b.pack ? ' pack' : '') + '" data-i="' + i + '" aria-haspopup="dialog">' + img +
       '<span class="brand-in"><span class="brand-tag">' + esc(b.tag) + '</span>' +
       '<span class="brand-name">' + esc(b.name) + '</span>' +
       '<span class="brand-go">View range ' + ARROW + '</span></span>' +
@@ -553,7 +577,7 @@ html.vhcm-lock, html.vhcm-lock body { overflow: hidden !important; }
 
   /* ---------- Brand range panel ---------- */
   var CLOSE = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>';
-  var BAN = /wading\s*waters|add to (cart|basket)|free (uk )?(delivery|shipping)|in stock|out of stock|buy now|klarna|paypal|engrav|we will contact|we'll contact|video|youtube|click here|shop now|order now|pre-?order|dispatch|next day|returns?\b|refund|we also offer|contact us|our (shop|store|team|customers)|in-store/i;
+  var BAN = /wading\s*waters|add to (cart|basket)|free (uk )?(delivery|shipping)|in stock|out of stock|buy now|klarna|paypal|engrav|we will contact|we'll contact|video|youtube|bait\s*superstore|ebay|click here|shop now|order now|pre-?order|dispatch|next day|returns?\b|refund|we also offer|contact us|our (shop|store|team|customers)|in-store/i;
   var PARTS = /\b(parts?|screws?|spring|plunger|bearing|o-?ring|ring|spare spools?|drag (knob|disc)|reel foot|spool cap)\b/i;
   var allCache = null, colCache = {};
 
@@ -587,7 +611,29 @@ html.vhcm-lock, html.vhcm-lock body { overflow: hidden !important; }
     });
     return allCache;
   }
+  var cdCache = null;
+  function loadCopdock(b) {
+    cdCache = cdCache || getJSON(BASE + 'copdock-ranges.json').catch(function (e) { cdCache = null; throw e; });
+    return cdCache.then(function (d) {
+      return (d.brands[b.key] || []).map(function (p) {
+        return { title: p.n, img: p.i ? d.img + p.i : '', lo: p.r[0], hi: p.r[1], opts: p.o, lines: p.d };
+      });
+    });
+  }
+  function fromShopify(p) {
+    var ps = (p.variants || []).map(function (v) { return parseFloat(v.price); }).filter(function (n) { return n > 0; });
+    var img = p.images && p.images[0] && p.images[0].src;
+    if (img) img += (img.indexOf('?') > -1 ? '&' : '?') + 'width=300';
+    return {
+      title: p.title, img: img || '', html: p.body_html,
+      lo: ps.length ? Math.min.apply(null, ps) : 0, hi: ps.length ? Math.max.apply(null, ps) : 0,
+      opts: (p.options || []).filter(function (o) {
+        return o.values && o.values.length && !(o.values.length === 1 && /default title/i.test(o.values[0]));
+      }).map(function (o) { return [o.name, o.values]; })
+    };
+  }
   function loadBrand(b) {
+    if (b.src === 'copdock') return loadCopdock(b);
     var base = b.col
       ? (colCache[b.col] = colCache[b.col] || getJSON(SUPPLIER + '/collections/' + b.col + '/products.json?limit=250')
           .then(function (d) { return d.products || []; })
@@ -595,54 +641,59 @@ html.vhcm-lock, html.vhcm-lock body { overflow: hidden !important; }
       : loadAll();
     return base.then(function (list) {
       var v = b.vendor.toLowerCase();
-      return list.filter(function (p) { return (p.vendor || '').toLowerCase() === v; });
+      return list.filter(function (p) { return (p.vendor || '').toLowerCase() === v; }).map(fromShopify);
     });
   }
   function money(n) { return '\u00a3' + (n % 1 ? n.toFixed(2) : n.toFixed(0)); }
   function rrp(p) {
-    var ps = (p.variants || []).map(function (v) { return parseFloat(v.price); }).filter(function (n) { return n > 0; });
-    if (!ps.length) return '';
-    var lo = Math.min.apply(null, ps), hi = Math.max.apply(null, ps);
-    return 'RRP ' + money(lo) + (hi > lo ? ' to ' + money(hi) : '');
+    if (!(p.lo > 0)) return '';
+    return 'RRP ' + money(p.lo) + (p.hi > p.lo ? ' to ' + money(p.hi) : '');
   }
-  function cleanTitle(t, b) {
-    return String(t || '').replace(/\s*[|\u2013-]\s*wading waters.*$/i, '').trim();
+  function cleanTitle(t) {
+    return String(t || '').replace(/\s*[|\u2013-]\s*(wading waters|bait superstore).*$/i, '').trim();
   }
   function opts(p) {
-    return (p.options || []).filter(function (o) {
-      return o.values && o.values.length && !(o.values.length === 1 && /default title/i.test(o.values[0]));
-    }).map(function (o) {
-      var vals = o.values.slice(0, 24);
-      return '<p class="p-opt"><b>' + esc(o.name) + ':</b> ' + vals.map(function (v) { return '<span>' + esc(v) + '</span>'; }).join('') +
-        (o.values.length > 24 ? '<span>+' + (o.values.length - 24) + ' more</span>' : '') + '</p>';
+    return (p.opts || []).map(function (o) {
+      var vals = o[1].slice(0, 24);
+      return '<p class="p-opt"><b>' + esc(o[0]) + ':</b> ' + vals.map(function (v) { return '<span>' + esc(v) + '</span>'; }).join('') +
+        (o[1].length > 24 ? '<span>+' + (o[1].length - 24) + ' more</span>' : '') + '</p>';
     }).join('');
   }
-  function desc(html) {
-    if (!html) return '';
+  function fromHtml(html) {
+    var lines = [], chars = 0;
     var doc = new DOMParser().parseFromString('<div>' + html + '</div>', 'text/html');
-    var out = [], inList = false, chars = 0;
     doc.querySelectorAll('p, li, h3, h4, h5').forEach(function (el) {
-      if (el.querySelector('p, li')) return;
+      if (el.tagName !== 'LI' && el.querySelector('p, li')) return;
+      if (el.tagName === 'P' && el.closest('li')) return;
       var t = (el.textContent || '').replace(/\s+/g, ' ').trim();
-      if (!t || t.length < 3 || BAN.test(t) || /https?:|www\./i.test(t) || chars > 1600) return;
+      if (!t || t.length < 3 || chars > 1600) return;
       chars += t.length;
-      if (el.tagName === 'LI') { if (!inList) { out.push('<ul>'); inList = true; } out.push('<li>' + esc(t) + '</li>'); }
+      lines.push((el.tagName === 'LI' ? '- ' : '') + t);
+    });
+    if (!lines.length) {
+      var t = (doc.body.textContent || '').replace(/\s+/g, ' ').trim();
+      if (t) lines.push(t.slice(0, 600) + (t.length > 600 ? '...' : ''));
+    }
+    return lines;
+  }
+  function desc(p) {
+    var lines = (p.lines || (p.html ? fromHtml(p.html) : [])).filter(function (t) {
+      return !BAN.test(t) && !/https?:|www\./i.test(t);
+    });
+    var out = [], inList = false;
+    lines.forEach(function (t) {
+      var li = /^[-\u2022]\s*/.test(t); t = t.replace(/^[-\u2022]\s*/, '');
+      if (li) { if (!inList) { out.push('<ul>'); inList = true; } out.push('<li>' + esc(t) + '</li>'); }
       else { if (inList) { out.push('</ul>'); inList = false; } out.push('<p>' + esc(t) + '</p>'); }
     });
     if (inList) out.push('</ul>');
-    if (!out.length) {
-      var t = (doc.body.textContent || '').replace(/\s+/g, ' ').trim();
-      if (t && !BAN.test(t)) out.push('<p>' + esc(t.slice(0, 600)) + (t.length > 600 ? '...' : '') + '</p>');
-    }
     return out.length ? '<details><summary>Specs &amp; details</summary><div class="p-desc">' + out.join('') + '</div></details>' : '';
   }
-  function card(p, b) {
-    var img = p.images && p.images[0] && p.images[0].src;
-    if (img) img += (img.indexOf('?') > -1 ? '&' : '?') + 'width=300';
+  function card(p) {
     return '<article class="p">' +
-      '<div class="p-img">' + (img ? '<img src="' + esc(img) + '" alt="" loading="lazy">' : '') + '</div>' +
-      '<div><h3 class="p-name">' + esc(cleanTitle(p.title, b)) + '</h3>' +
-      (rrp(p) ? '<p class="p-rrp">' + rrp(p) + '</p>' : '') + opts(p) + desc(p.body_html) + '</div>' +
+      '<div class="p-img">' + (p.img ? '<img src="' + esc(p.img) + '" alt="" loading="lazy">' : '') + '</div>' +
+      '<div><h3 class="p-name">' + esc(cleanTitle(p.title)) + '</h3>' +
+      (rrp(p) ? '<p class="p-rrp">' + rrp(p) + '</p>' : '') + opts(p) + desc(p) + '</div>' +
     '</article>';
   }
   function render(list, b) {
@@ -654,7 +705,7 @@ html.vhcm-lock, html.vhcm-lock body { overflow: hidden !important; }
       mList.innerHTML = '<p class="m-msg">We\'re updating this range. Message us and we\'ll tell you what\'s available.</p>';
       return;
     }
-    mList.innerHTML = main.map(function (p) { return card(p, b); }).join('') +
+    mList.innerHTML = main.map(card).join('') +
       (parts ? '<p class="m-msg">Spare parts and custom colour parts also available. Ask us.</p>' : '');
   }
   function openBrand(i) {
