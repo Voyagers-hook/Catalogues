@@ -436,7 +436,7 @@
       </div>
       <div class="ask-btns">
         <a class="btn btn-teal" href="/contact">Get in touch</a>
-        <a class="btn btn-out" href="/shop">Shop everything</a>
+        <a class="btn btn-out" href="/bait-additives">Shop all bait</a>
       </div>
     </div>
   </div>
@@ -471,8 +471,8 @@
     { id: 'leads', label: 'Leads & end tackle', re: /\blead|clip|swivel|rig\b/i },
     { id: 'liquids', label: 'Liquids & attractors', re: /liquid|syrup|booster|dip\b|dye|accelerant (powder|-|bait dye)|sensate|transforma|powder/i },
     { id: 'carp', label: 'Carp bait', re: /boilie|pop ?ups?|wafter|hook ?baits?/i },
-    { id: 'bulk', label: 'Bulk & particles', re: /\b[12]\d\s?kg|bulk|maize|fish ?meal|hemp|pigeon|particle|bucket/i },
     { id: 'match', label: 'Match & method', re: /method|ground ?bait|squeeze|expander|fatboys|2 in 1|mayhem/i },
+    { id: 'bulk', label: 'Bulk & particles', re: /\b[12]\d\s?kg|bulk|maize|fish ?meal|hemp|pigeon|particle|bucket/i },
     { id: 'carp', label: 'Carp bait', re: /./ }
   ];
   var CHIPS = ['carp', 'match', 'liquids', 'bulk', 'leads']; /* chip order */
@@ -482,13 +482,13 @@
   function esc(t) { return String(t).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
   function money(n) { return '£' + Number(n).toFixed(2); }
   function clean(n) {
-    return String(n).replace(/\s*[-–]\s*all\s+(flavours?|sizes?|colou?rs?)\b.*$/i, '')
+    return String(n).replace(/\s*[-–]\s*all\s+(flavours?|sizes?|colou?rs?)\b/i, '')
       .replace(/\s+all\s+(flavours?|sizes?|colou?rs?)$/i, '').replace(/\s{2,}/g, ' ').trim();
   }
   function catOf(n) { for (var i = 0; i < CATS.length; i++) if (CATS[i].re.test(n)) return CATS[i].id; return 'carp'; }
   function optText(o) {
     if (!o || !o.length) return '';
-    return o.map(function (x) { return x[1] + ' ' + String(x[0]).toLowerCase().replace(/s$/, '') + 's'; }).join(' &middot; ');
+    return o.map(function (x) { return x[1] + ' ' + String(x[0]).toLowerCase().replace(/s$/, '').replace(/^color$/, 'colour') + 's'; }).join(' &middot; ');
   }
 
   var root = document.getElementById('vhbob');
@@ -585,7 +585,7 @@
     makers(counts);
     chips(); draw();
   }).catch(function () {
-    grid.innerHTML = '<p class="msg">We couldn\'t load the range just now. <a href="/shop">Browse the shop</a> or refresh the page.</p>';
+    grid.innerHTML = '<p class="msg">We couldn\'t load the range just now. <a href="/bait-additives">Browse all bait</a> or refresh the page.</p>';
     kai([]);
   });
 })();
