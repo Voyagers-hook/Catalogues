@@ -10,7 +10,8 @@
   2. Copy one line in CATALOGUES (script at the bottom) and edit it.
 
   TO ADD A BRAND
-  Copy one line in BRANDS and edit it. img is optional.
+  Copy one line in BRANDS and edit it. vendor must match the
+  supplier's spelling. col and img are optional.
 
   Style keys: carp, coarse, predator, sea, fly
   Colours: brown #26241f | stone #f1ece3 | teal #0397b2 | orange #ff751f
@@ -181,10 +182,10 @@
 
 /* ---------- MORE BRANDS ---------- */
 #vhcat .brands { padding-block: clamp(44px, 6vw, 72px) 10px; }
-#vhcat .bgrid { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 14px; }
+#vhcat .bgrid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; }
 #vhcat .brand {
-  position: relative; display: block; aspect-ratio: 4 / 5; border-radius: 12px; overflow: hidden;
-  background: var(--brown); color: #fff !important;
+  position: relative; display: block; width: 100%; aspect-ratio: 4 / 5; border-radius: 12px; overflow: hidden;
+  background: var(--brown); color: #fff !important; border: 0; cursor: pointer; text-align: left; font: inherit;
   transition: transform .25s cubic-bezier(.2,.8,.2,1), box-shadow .25s;
 }
 #vhcat .brand:hover { transform: translateY(-4px); box-shadow: 0 18px 38px rgba(38,36,31,0.22); }
@@ -220,6 +221,66 @@
 #vhcat .ask p { margin-top: 14px; font-size: 15px; line-height: 1.65; color: rgba(255,255,255,0.6); max-width: 560px; }
 #vhcat .ask-btns { display: grid; gap: 10px; }
 #vhcat .ask .fine { margin-top: 22px; font-size: 12px; line-height: 1.6; color: var(--mute); max-width: none; }
+
+
+/* ---------- BRAND RANGE PANEL (lives on <body>) ---------- */
+#vhcm, #vhcm *, #vhcm *::before, #vhcm *::after { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif !important; }
+#vhcm {
+  position: fixed; inset: 0; z-index: 2147483000; display: none;
+  background: rgba(38,36,31,0.8); -webkit-font-smoothing: antialiased; color: #4a4843; line-height: 1.5;
+}
+#vhcm.open { display: flex; align-items: center; justify-content: center; padding: 24px; }
+#vhcm .m-box {
+  width: min(980px, 100%); max-height: calc(100vh - 48px); display: flex; flex-direction: column;
+  background: #f1ece3; border-radius: 16px; overflow: hidden; box-shadow: 0 30px 80px rgba(0,0,0,0.4);
+}
+#vhcm .m-head { background: #26241f; padding: 22px 26px 20px; border-bottom: 4px solid #ff751f; display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; }
+#vhcm .m-kick { display: flex; align-items: center; gap: 10px; font-size: 10px; font-weight: 800; letter-spacing: 0.28em; text-transform: uppercase; color: #0397b2; }
+#vhcm .m-kick::before { content: ''; width: 22px; height: 2px; background: #0397b2; }
+#vhcm .m-title { margin-top: 10px; font-size: clamp(26px, 4vw, 40px); font-weight: 900; letter-spacing: -0.04em; line-height: 0.95; text-transform: uppercase; color: #fff; }
+#vhcm .m-title span { color: #ff751f; }
+#vhcm .m-sub { margin-top: 10px; font-size: 13px; color: rgba(255,255,255,0.65); }
+#vhcm .m-x {
+  flex-shrink: 0; width: 42px; height: 42px; border-radius: 50%; border: 1.5px solid rgba(255,255,255,0.25);
+  background: transparent; color: #fff; cursor: pointer; display: grid; place-items: center;
+}
+#vhcm .m-x:hover { border-color: #fff; }
+#vhcm .m-x svg { width: 18px; height: 18px; fill: currentColor; }
+#vhcm .m-list { overflow-y: auto; -webkit-overflow-scrolling: touch; overscroll-behavior: contain; padding: 18px; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+#vhcm .m-msg { grid-column: 1 / -1; padding: 30px 10px; text-align: center; font-size: 15px; color: #7a766d; }
+#vhcm .p { display: grid; grid-template-columns: 110px 1fr; gap: 14px; background: #fff; border: 1px solid #e4ddd0; border-radius: 12px; padding: 12px; align-items: start; }
+#vhcm .p-img { width: 110px; height: 110px; border-radius: 8px; background: #f1ece3; overflow: hidden; }
+#vhcm .p-img img { width: 100%; height: 100%; object-fit: contain; display: block; }
+#vhcm .p-name { font-size: 15px; font-weight: 900; line-height: 1.2; color: #26241f; text-transform: uppercase; letter-spacing: -0.01em; }
+#vhcm .p-rrp { margin-top: 4px; font-size: 12px; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; color: #0383a0; }
+#vhcm .p-opt { margin-top: 8px; font-size: 12px; line-height: 1.5; }
+#vhcm .p-opt b { color: #26241f; font-weight: 800; }
+#vhcm .p-opt span { display: inline-block; margin: 3px 4px 0 0; padding: 2px 8px; border-radius: 6px; background: #f1ece3; border: 1px solid #e4ddd0; color: #4a4843; }
+#vhcm details { margin-top: 8px; }
+#vhcm summary { cursor: pointer; font-size: 11px; font-weight: 800; letter-spacing: 0.14em; text-transform: uppercase; color: #26241f; }
+#vhcm .p-desc { margin-top: 6px; font-size: 13px; line-height: 1.6; }
+#vhcm .p-desc li { margin-left: 18px; }
+#vhcm .p-desc p + p, #vhcm .p-desc p + ul, #vhcm .p-desc ul + p { margin-top: 6px; }
+#vhcm .m-foot { padding: 16px 22px; border-top: 1px solid #e4ddd0; display: flex; align-items: center; justify-content: space-between; gap: 14px; background: #fff; }
+#vhcm .m-foot p { font-size: 12px; line-height: 1.55; color: #7a766d; max-width: 560px; }
+#vhcm .m-btn {
+  flex-shrink: 0; display: inline-flex; align-items: center; justify-content: center; padding: 14px 24px; border-radius: 8px;
+  background: #0397b2; color: #fff !important; text-decoration: none !important;
+  font-size: 12px; font-weight: 800; letter-spacing: 0.14em; text-transform: uppercase; line-height: 1.2;
+}
+#vhcm .m-btn:hover { background: #0383a0; }
+#vhcm a:focus-visible, #vhcm button:focus-visible, #vhcm summary:focus-visible { outline: 3px solid #0397b2; outline-offset: 3px; }
+html.vhcm-lock, html.vhcm-lock body { overflow: hidden !important; }
+@media (max-width: 760px) {
+  #vhcm.open { padding: 0; align-items: flex-end; }
+  #vhcm .m-box { max-height: 92vh; border-radius: 16px 16px 0 0; }
+  #vhcm .m-head { padding: 18px 18px 16px; }
+  #vhcm .m-list { grid-template-columns: 1fr; padding: 12px; gap: 10px; }
+  #vhcm .p { grid-template-columns: 84px 1fr; gap: 12px; padding: 10px; }
+  #vhcm .p-img { width: 84px; height: 84px; }
+  #vhcm .m-foot { flex-direction: column; align-items: stretch; padding: 14px; }
+  #vhcm .m-btn { width: 100%; }
+}
 
 /* ---------- MOTION ---------- */
 @keyframes vhc-rise { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: none; } }
@@ -283,8 +344,8 @@
 <section class="hero">
   <div class="hero-l">
     <div class="kicker">Brand catalogues &middot; Price match</div>
-    <h1>Browse<br>the full<br><em>range</em><span class="dot">.</span></h1>
-    <p class="hero-sub">Catalogues from the brands we stock, all in one place. Found something you like? <b>Ask us about availability</b> and we'll check it for you.</p>
+    <h1>The<br>brands<br>we <em>stock</em><span class="dot">.</span></h1>
+    <p class="hero-sub">Catalogues and full ranges from our brands, all in one place. Found something you like? <b>Ask us about availability</b> and we'll check it for you.</p>
     <div class="hero-btns">
       <a class="btn btn-teal" href="#vhc-cats">See the catalogues</a>
       <a class="btn btn-out" href="/contact">Check availability</a>
@@ -363,7 +424,7 @@
         <div class="kicker">Also available</div>
         <h2>More <em>brands</em><span class="dot">.</span></h2>
       </div>
-      <p class="head-note">See the full range for each brand, then ask us for price and availability.</p>
+      <p class="head-note">Tap a brand to see the range, options and RRP. Then ask us for our price.</p>
     </div>
     <div class="bgrid" id="vhc-brands"></div>
     <p class="empty" id="vhc-empty">Nothing matches that search. Try another brand name.</p>
@@ -414,37 +475,42 @@
     { name: 'Mustad', file: 'Mustad', tag: 'Hooks & terminal', styles: ['sea', 'predator', 'coarse', 'carp'], pages: 36, size: '2 MB',
       blurb: 'Hooks, swivels, rigs, lures and tools.' },
     { name: 'More from Leeda', file: 'More-Brands-from-Leeda', tag: 'Mixed brands', styles: ['coarse', 'carp', 'predator', 'sea', 'fly'], pages: 87, size: '7 MB',
-      blurb: 'Airflo, Dinsmores, Kamasan, Lowrance, Maxima, Mepps, Petzl and more.' }
+      blurb: 'Airflo, Dinsmores, Kamasan, Lowrance, Maxima, Mepps, Petzl and more.' },
+    { name: 'Thomas & Thomas', file: 'Thomas-and-Thomas-2026', tag: 'Fly rods', styles: ['fly'], pages: 21, size: '13 MB',
+      blurb: 'Hand-built fly rods for trout, salmon, saltwater and euro nymphing.' },
+    { name: 'SPRO Freestyle', file: 'SPRO-Freestyle-2025', tag: 'Predator & lure', styles: ['predator'], pages: 28, size: '5 MB',
+      blurb: 'Street fishing rods, reels, lures, jig heads and luggage.' },
+    { name: 'ASSO', file: 'ASSO-2025', tag: 'Fishing line', styles: [], pages: 92, size: '8 MB',
+      blurb: 'Mono, fluorocarbon and braid for every style of fishing.' }
   ];
 
-  /* styles: [] shows a brand under every filter */
-  var WW = 'https://wadingwaters.com/cdn/shop/files/';
+  /* Brand range panels. Products load live from the supplier's product list,
+     filtered by vendor (the vendor name exactly as the supplier spells it).
+     col = optional collection handle, quicker than loading everything.
+     Prices shown are RRP. No links to the supplier are shown. */
+  var SUPPLIER = 'https://wadingwaters.com';
+  var WW = SUPPLIER + '/cdn/shop/files/';
   var BRANDS = [
-    { name: 'Thomas & Thomas', tag: 'Fly rods', styles: ['fly'], url: 'https://wadingwaters.com/pages/thomas-and-thomas',
-      img: WW + '66a3dba0dc116e31d143029a_sextant_fly_rod_lifestyle2.webp?v=1757083983&width=700' },
-    { name: 'Douglas', tag: 'Fly rods', styles: ['fly'], url: 'https://wadingwaters.com/pages/douglas-fly-fishing',
+    { name: 'Douglas', tag: 'Fly rods', styles: ['fly'], vendor: 'Douglas',
       img: WW + 'WadingWaters_2023_HaddonHallbeat_37.jpg?v=1755160216&width=700' },
-    { name: 'Shilton', tag: 'Fly reels', styles: ['fly'], url: 'https://wadingwaters.com/pages/shilton-reels',
+    { name: 'Shilton', tag: 'Fly reels', styles: ['fly'], vendor: 'Shilton', col: 'shilton',
       img: WW + 'sHILTON_cr.jpg?v=1755265129&width=700' },
-    { name: 'Reel Fly Fishing', tag: 'Fly reels', styles: ['fly'], url: 'https://wadingwaters.com/pages/reel-fly-fishing',
+    { name: 'Reel Fly Fishing', tag: 'Fly reels', styles: ['fly'], vendor: 'Reel Fly Fishing',
       img: WW + '5b140e61-c87855_2bcbb3d484eb464c9963f46fc7cad2bb_mv2.jpg?v=1754662520&width=700' },
-    { name: 'Broder', tag: 'Fly fishing', styles: ['fly'], url: 'https://wadingwaters.com/pages/broder-fly-fishing',
+    { name: 'Broder', tag: 'Fly fishing', styles: ['fly'], vendor: 'Broder',
       img: WW + '5208fc78-c87855_144d32b309f443979f7c8c9f5817f54c_mv2.webp?v=1754662510&width=700' },
-    { name: 'Finntrail', tag: 'Waders & clothing', styles: [], url: 'https://wadingwaters.com/pages/finntrail',
+    { name: 'Finntrail', tag: 'Waders & clothing', styles: [], vendor: 'Finntrail', col: 'finntrail',
       img: WW + 'xjp3yokie2916jy5znk04ylgz8suszi0.jpg?v=1780927708&width=700' },
-    { name: 'Colter', tag: 'Backcountry gear', styles: [], url: 'https://wadingwaters.com/pages/colter-backcountry',
+    { name: 'Colter', tag: 'Backcountry gear', styles: [], vendor: 'Colter', col: 'colter',
       img: WW + 'external-file_edited.avif?v=1757862195&width=700' },
-    { name: 'Backcountry Skinz', tag: 'Outdoor gear', styles: [], url: 'https://wadingwaters.com/pages/backcountry-skinz',
+    { name: 'Backcountry Skinz', tag: 'Outdoor gear', styles: [], vendor: 'Backcountry Skinz', col: 'backcountry-skinz',
       img: WW + '1a49d068-c87855_0858db286e9242ccb7a70ae57c6d7ea1_mv2.jpg?v=1780681852&width=700' },
-    { name: 'Cling', tag: 'Magnetic accessories', styles: [], url: 'https://wadingwaters.com/pages/cling-fishing',
-      img: WW + 'cling-mag-grab-mini-on-hat-header.webp?v=1755116710&width=700' },
-    { name: 'ASSO', tag: 'Fishing line', styles: [], url: 'https://wadingwaters.com/pages/asso',
-      img: WW + '56b3db61-6b98-4070-b92c-6e5a7e20a58e_1.jpg?v=1760969081&width=700' }
+    { name: 'Cling', tag: 'Magnetic accessories', styles: [], vendor: 'Cling Fishing Products', col: 'cling',
+      img: WW + 'cling-mag-grab-mini-on-hat-header.webp?v=1755116710&width=700' }
   ];
   /* ===================== END EDIT ME ===================== */
 
   var ARROW = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/></svg>';
-  var OUT = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3h7v7h-2V6.41l-9.29 9.3-1.42-1.42L17.59 5H14V3zM5 5h6v2H7v10h10v-4h2v6H5V5z"/></svg>';
   function esc(t) { return String(t).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
 
   var root = document.getElementById('vhcat');
@@ -478,12 +544,144 @@
 
   bgrid.innerHTML = BRANDS.map(function (b, i) {
     var img = b.img ? '<img src="' + esc(b.img) + '" alt="" loading="lazy" onerror="this.parentNode.classList.add(\'noimg\');this.remove()">' : '';
-    return '<a class="brand' + (b.img ? '' : ' noimg') + '" data-i="' + i + '" href="' + esc(b.url) + '" target="_blank" rel="noopener">' + img +
+    return '<button type="button" class="brand' + (b.img ? '' : ' noimg') + '" data-i="' + i + '" aria-haspopup="dialog">' + img +
       '<span class="brand-in"><span class="brand-tag">' + esc(b.tag) + '</span>' +
       '<span class="brand-name">' + esc(b.name) + '</span>' +
-      '<span class="brand-go">View range ' + OUT + '</span></span>' +
-    '</a>';
+      '<span class="brand-go">View range ' + ARROW + '</span></span>' +
+    '</button>';
   }).join('');
+
+  /* ---------- Brand range panel ---------- */
+  var CLOSE = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>';
+  var BAN = /wading\s*waters|add to (cart|basket)|free (uk )?(delivery|shipping)|in stock|out of stock|buy now|klarna|paypal|engrav|we will contact|we'll contact|video|youtube|click here|shop now|order now|pre-?order|dispatch|next day/i;
+  var PARTS = /\b(parts?|screws?|spring|plunger|bearing|o-?ring|ring|spare spools?|drag (knob|disc)|reel foot|spool cap)\b/i;
+  var allCache = null, colCache = {};
+
+  var m = document.createElement('div');
+  m.id = 'vhcm';
+  m.setAttribute('role', 'dialog');
+  m.setAttribute('aria-modal', 'true');
+  m.setAttribute('aria-labelledby', 'vhcm-t');
+  m.innerHTML = '<div class="m-box">' +
+    '<div class="m-head"><div><div class="m-kick">The range</div><h2 class="m-title" id="vhcm-t"></h2>' +
+    '<p class="m-sub">Options, specs and RRP. Ask us for our price and availability.</p></div>' +
+    '<button type="button" class="m-x" aria-label="Close">' + CLOSE + '</button></div>' +
+    '<div class="m-list" id="vhcm-list"></div>' +
+    '<div class="m-foot"><p>Prices shown are the brand\'s RRP and are not necessarily our price. We price match most UK retailers.</p>' +
+    '<a class="m-btn" href="/contact">Ask us</a></div>' +
+  '</div>';
+  document.body.appendChild(m);
+  var mList = m.querySelector('#vhcm-list'), mTitle = m.querySelector('#vhcm-t'), lastFocus = null, token = 0;
+
+  function getJSON(url) {
+    return fetch(url, { credentials: 'omit' }).then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); });
+  }
+  function loadAll() {
+    if (allCache) return allCache;
+    allCache = Promise.all([1, 2, 3].map(function (pg) {
+      return getJSON(SUPPLIER + '/products.json?limit=250&page=' + pg).then(function (d) { return d.products || []; }, function () { return []; });
+    })).then(function (pages) {
+      var out = [].concat.apply([], pages);
+      if (!out.length) { allCache = null; throw new Error('empty'); }
+      return out;
+    });
+    return allCache;
+  }
+  function loadBrand(b) {
+    var base = b.col
+      ? (colCache[b.col] = colCache[b.col] || getJSON(SUPPLIER + '/collections/' + b.col + '/products.json?limit=250')
+          .then(function (d) { return d.products || []; })
+          .catch(function () { delete colCache[b.col]; return loadAll(); }))
+      : loadAll();
+    return base.then(function (list) {
+      var v = b.vendor.toLowerCase();
+      return list.filter(function (p) { return (p.vendor || '').toLowerCase() === v; });
+    });
+  }
+  function money(n) { return '\u00a3' + (n % 1 ? n.toFixed(2) : n.toFixed(0)); }
+  function rrp(p) {
+    var ps = (p.variants || []).map(function (v) { return parseFloat(v.price); }).filter(function (n) { return n > 0; });
+    if (!ps.length) return '';
+    var lo = Math.min.apply(null, ps), hi = Math.max.apply(null, ps);
+    return 'RRP ' + money(lo) + (hi > lo ? ' to ' + money(hi) : '');
+  }
+  function cleanTitle(t, b) {
+    return String(t || '').replace(/\s*[|\u2013-]\s*wading waters.*$/i, '').trim();
+  }
+  function opts(p) {
+    return (p.options || []).filter(function (o) {
+      return o.values && o.values.length && !(o.values.length === 1 && /default title/i.test(o.values[0]));
+    }).map(function (o) {
+      var vals = o.values.slice(0, 24);
+      return '<p class="p-opt"><b>' + esc(o.name) + ':</b> ' + vals.map(function (v) { return '<span>' + esc(v) + '</span>'; }).join('') +
+        (o.values.length > 24 ? '<span>+' + (o.values.length - 24) + ' more</span>' : '') + '</p>';
+    }).join('');
+  }
+  function desc(html) {
+    if (!html) return '';
+    var doc = new DOMParser().parseFromString('<div>' + html + '</div>', 'text/html');
+    var out = [], inList = false, chars = 0;
+    doc.querySelectorAll('p, li, h3, h4, h5').forEach(function (el) {
+      if (el.querySelector('p, li')) return;
+      var t = (el.textContent || '').replace(/\s+/g, ' ').trim();
+      if (!t || t.length < 3 || BAN.test(t) || /https?:|www\./i.test(t) || chars > 1600) return;
+      chars += t.length;
+      if (el.tagName === 'LI') { if (!inList) { out.push('<ul>'); inList = true; } out.push('<li>' + esc(t) + '</li>'); }
+      else { if (inList) { out.push('</ul>'); inList = false; } out.push('<p>' + esc(t) + '</p>'); }
+    });
+    if (inList) out.push('</ul>');
+    if (!out.length) {
+      var t = (doc.body.textContent || '').replace(/\s+/g, ' ').trim();
+      if (t && !BAN.test(t)) out.push('<p>' + esc(t.slice(0, 600)) + (t.length > 600 ? '...' : '') + '</p>');
+    }
+    return out.length ? '<details><summary>Specs &amp; details</summary><div class="p-desc">' + out.join('') + '</div></details>' : '';
+  }
+  function card(p, b) {
+    var img = p.images && p.images[0] && p.images[0].src;
+    if (img) img += (img.indexOf('?') > -1 ? '&' : '?') + 'width=300';
+    return '<article class="p">' +
+      '<div class="p-img">' + (img ? '<img src="' + esc(img) + '" alt="" loading="lazy">' : '') + '</div>' +
+      '<div><h3 class="p-name">' + esc(cleanTitle(p.title, b)) + '</h3>' +
+      (rrp(p) ? '<p class="p-rrp">' + rrp(p) + '</p>' : '') + opts(p) + desc(p.body_html) + '</div>' +
+    '</article>';
+  }
+  function render(list, b) {
+    var main = [], parts = 0;
+    list.forEach(function (p) {
+      if (b.vendor === 'Shilton' && PARTS.test(p.title || '')) parts++; else main.push(p);
+    });
+    if (!main.length && !parts) {
+      mList.innerHTML = '<p class="m-msg">We\'re updating this range. Message us and we\'ll tell you what\'s available.</p>';
+      return;
+    }
+    mList.innerHTML = main.map(function (p) { return card(p, b); }).join('') +
+      (parts ? '<p class="m-msg">Spare parts and custom colour parts also available. Ask us.</p>' : '');
+  }
+  function openBrand(i) {
+    var b = BRANDS[i], my = ++token;
+    lastFocus = document.activeElement;
+    mTitle.innerHTML = esc(b.name) + '<span>.</span>';
+    mList.innerHTML = '<p class="m-msg">Loading the range...</p>';
+    m.classList.add('open');
+    document.documentElement.classList.add('vhcm-lock');
+    m.querySelector('.m-x').focus();
+    mList.scrollTop = 0;
+    loadBrand(b).then(function (list) { if (my === token) render(list, b); }, function () {
+      if (my === token) mList.innerHTML = '<p class="m-msg">We couldn\'t load this range just now. Message us and we\'ll send you the details.</p>';
+    });
+  }
+  function closeM() {
+    if (!m.classList.contains('open')) return;
+    token++;
+    m.classList.remove('open');
+    document.documentElement.classList.remove('vhcm-lock');
+    if (lastFocus && lastFocus.focus) lastFocus.focus();
+  }
+  bgrid.addEventListener('click', function (e) {
+    var el = e.target.closest('.brand'); if (el) openBrand(+el.getAttribute('data-i'));
+  });
+  m.addEventListener('click', function (e) { if (e.target === m || e.target.closest('.m-x')) closeM(); });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeM(); });
 
   function matches(item, term) {
     var styleOk = style === 'all' || item.styles.length === 0 || item.styles.indexOf(style) !== -1;
